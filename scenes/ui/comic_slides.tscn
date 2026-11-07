@@ -1,0 +1,200 @@
+[gd_scene format=3 uid="uid://buwq48kdxxyos"]
+
+[ext_resource type="Script" uid="uid://w1xhwl4cm4r4" path="res://scenes/ui/comic_slides.gd" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn"]
+bg_color = Color(0.12, 0.16, 0.22, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.3, 0.85, 1, 0.7)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_caption"]
+bg_color = Color(0.08, 0.1, 0.14, 0.92)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.3, 0.85, 1, 0.8)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_next"]
+bg_color = Color(0.15, 0.35, 0.45, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.85, 0.25, 0.9)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="ComicSlides" type="Control" unique_id=201253553]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="BackgroundRect" type="TextureRect" parent="." unique_id=1540114747]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="DimmerRect" type="ColorRect" parent="." unique_id=536968360]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.3)
+
+[node name="ActorsContainer" type="Control" parent="." unique_id=1302690195]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TopBarMargin" type="MarginContainer" parent="." unique_id=1559030564]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 90.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 40
+
+[node name="TopBarHBox" type="HBoxContainer" parent="TopBarMargin" unique_id=1111301797]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="ComicTitleLabel" type="Label" parent="TopBarMargin/TopBarHBox" unique_id=1606467884]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.25, 1)
+theme_override_font_sizes/font_size = 28
+text = "PROLOGUE: PENCEROBOHAN ALAM MELAYU"
+
+[node name="PageLabel" type="Label" parent="TopBarMargin/TopBarHBox" unique_id=736639327]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "PANEL 1 / 4"
+
+[node name="Spacer" type="Control" parent="TopBarMargin/TopBarHBox" unique_id=820071443]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SkipButton" type="Button" parent="TopBarMargin/TopBarHBox" unique_id=1266615615]
+custom_minimum_size = Vector2(160, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "SKIP >>"
+
+[node name="BottomMargin" type="MarginContainer" parent="." unique_id=276055218]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -280.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 28
+
+[node name="CaptionVBox" type="VBoxContainer" parent="BottomMargin" unique_id=445099055]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="CaptionPanel" type="PanelContainer" parent="BottomMargin/CaptionVBox" unique_id=609360359]
+custom_minimum_size = Vector2(0, 140)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_caption")
+
+[node name="Margin" type="MarginContainer" parent="BottomMargin/CaptionVBox/CaptionPanel" unique_id=2064208585]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="BottomMargin/CaptionVBox/CaptionPanel/Margin" unique_id=355986080]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="SpeakerLabel" type="Label" parent="BottomMargin/CaptionVBox/CaptionPanel/Margin/VBox" unique_id=1051355738]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "🗣️ NARRATOR (HIKAYAT ANGKASA)"
+
+[node name="TextLabel" type="Label" parent="BottomMargin/CaptionVBox/CaptionPanel/Margin/VBox" unique_id=383486222]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.95, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "Kurun ke-25. Interstellar Realm of Alam Melayu berkembang mekar di bawah sinar Menara Indera."
+autowrap_mode = 3
+
+[node name="TapHintLabel" type="Label" parent="BottomMargin/CaptionVBox" unique_id=1666352702]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.35, 0.9)
+theme_override_font_sizes/font_size = 18
+text = "👆 TAP ANYWHERE TO CONTINUE ➔"
+horizontal_alignment = 1
+
+[node name="NavHBox" type="HBoxContainer" parent="BottomMargin/CaptionVBox" unique_id=576614697]
+layout_mode = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="PrevButton" type="Button" parent="BottomMargin/CaptionVBox/NavHBox" unique_id=2078162452]
+custom_minimum_size = Vector2(180, 56)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "◀ PREV"
+
+[node name="DotsHBox" type="HBoxContainer" parent="BottomMargin/CaptionVBox/NavHBox" unique_id=1703852968]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="NextButton" type="Button" parent="BottomMargin/CaptionVBox/NavHBox" unique_id=1645828564]
+custom_minimum_size = Vector2(240, 56)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.7, 1)
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_next")
+text = "NEXT ➔"

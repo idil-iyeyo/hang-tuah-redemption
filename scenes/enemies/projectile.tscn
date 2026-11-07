@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://cdfgthwdlwtof"]
+
+[ext_resource type="Script" uid="uid://2smsqlch3024" path="res://scenes/enemies/projectile.gd" id="1_proj_script"]
+[ext_resource type="Texture2D" uid="uid://pqeu86rp60uf" path="res://icon.svg" id="2_proj_icon"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_proj"]
+radius = 15.0
+
+[node name="Projectile" type="Area2D" unique_id=1552540682]
+scale = Vector2(2.5, 2.5)
+script = ExtResource("1_proj_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2029473124]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_proj_icon")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=279315617]
+shape = SubResource("CircleShape2D_proj")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1796238347]
+rect = Rect2(-20, -20, 40, 40)

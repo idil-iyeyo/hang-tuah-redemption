@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://colwubv0elcux"]
+
+[ext_resource type="Script" uid="uid://0j26db27tjg7" path="res://scenes/enemies/bile_breeder.gd" id="1_breeder_script"]
+[ext_resource type="Texture2D" uid="uid://cueyit7s3qoko" path="res://assets/textures/enemies/Songket Drone - Enemy.png" id="2_t0hrf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_breeder"]
+radius = 46.0
+
+[node name="BileBreeder" type="Area2D" unique_id=272117819]
+script = ExtResource("1_breeder_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1190525495]
+texture_filter = 1
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_t0hrf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1862684794]
+shape = SubResource("CircleShape2D_breeder")
+
+[node name="HPBar" type="ProgressBar" parent="." unique_id=1575311642]
+custom_minimum_size = Vector2(80, 12)
+offset_left = -40.0
+offset_top = -62.0
+offset_right = 40.0
+offset_bottom = -50.0
+max_value = 20.0
+value = 20.0
+show_percentage = false
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1680556718]
+rect = Rect2(-60, -60, 120, 120)

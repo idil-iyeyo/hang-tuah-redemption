@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://d1emd1hicrbg2"]
+
+[ext_resource type="Script" uid="uid://tu8j14e4nj85" path="res://scenes/bosses/dragon_roach.gd" id="1_dragon_script"]
+[ext_resource type="Texture2D" uid="uid://drixyxi7dwimx" path="res://assets/textures/bosses/MinangKabau Ship - Enemy ( Boss 2 ).png" id="2_d05sx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dragon"]
+size = Vector2(344.31668, 200)
+
+[node name="DragonRoach" type="Area2D" unique_id=341031163]
+scale = Vector2(3, 3)
+script = ExtResource("1_dragon_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=363608492]
+texture_filter = 1
+texture_repeat = 1
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_d05sx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2125596431]
+position = Vector2(1.6666692, 0)
+scale = Vector2(0.6253933, 0.6253933)
+shape = SubResource("RectangleShape2D_dragon")

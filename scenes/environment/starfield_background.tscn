@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://shhkkhmgf81"]
+
+[ext_resource type="Script" uid="uid://bkgh0r1mpawlj" path="res://scenes/environment/starfield_background.gd" id="1_starfield_script"]
+
+[node name="StarfieldBackground" type="CanvasLayer" unique_id=412031384]
+layer = -10
+
+[node name="StarfieldCanvas" type="Control" parent="." unique_id=324005950]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_starfield_script")
+distant_star_count = 20
+mid_star_count = 15

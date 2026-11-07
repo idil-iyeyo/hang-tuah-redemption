@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://cm3q08w17a4vy"]
+
+[ext_resource type="Script" uid="uid://wg1vjepjsooc" path="res://scenes/bosses/boss_laser_beam.gd" id="1_laser_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_beam"]
+size = Vector2(1920, 24)
+
+[node name="BossLaserBeam" type="Area2D" unique_id=123250803]
+script = ExtResource("1_laser_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=346365889]
+position = Vector2(-960, 0)
+shape = SubResource("RectangleShape2D_beam")

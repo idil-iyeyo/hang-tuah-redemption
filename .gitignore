@@ -1,0 +1,130 @@
+# ==============================================================================
+# Godot 4 Engine Git Ignore Rules
+# Project: Hang Tuah Redemption
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# Godot 4+ Cache & Internal Data
+# ------------------------------------------------------------------------------
+# Godot 4 stores editor settings, shader caches, and imported asset caches here.
+.godot/
+
+# Godot 3 legacy import cache (precautionary)
+.import/
+
+# Godot translation binary files (generated from PO/CSV)
+*.translation
+
+# ------------------------------------------------------------------------------
+# Export Credentials & Sensitive Keystores
+# ------------------------------------------------------------------------------
+# Keystores & Android signing keys (NEVER commit secrets or release signing keys)
+*.keystore
+*.jks
+
+# Export presets credential file (Godot 4 stores passwords separately here)
+export_credentials.cfg
+
+# ------------------------------------------------------------------------------
+# Android Build & Gradle Template
+# ------------------------------------------------------------------------------
+# Ignore Godot's generated Gradle build directory (if Android build template is installed)
+android/build/
+android/.gradle/
+
+# Preserve custom Android plugins, manifests, and .gdap configurations:
+!android/plugins/
+
+# ------------------------------------------------------------------------------
+# Exported Binaries & Build Output
+# ------------------------------------------------------------------------------
+# Export directories
+/build/
+/builds/
+/bin/
+/export/
+/exports/
+/dist/
+
+# Standalone exported package files
+*.apk
+*.aab
+*.pck
+*.exe
+*.dll
+*.so
+*.dylib
+*.dmg
+*.app/
+*.ipa
+*.wasm
+*.zip
+
+# ------------------------------------------------------------------------------
+# Python (Test Verification & Asset Generation Scripts)
+# ------------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+env/
+ENV/
+
+# ------------------------------------------------------------------------------
+# Mono / C# (Godot .NET if added in future)
+# ------------------------------------------------------------------------------
+.mono/
+data_*/
+**/[bB]in/
+**/[oO]bj/
+
+# ------------------------------------------------------------------------------
+# Operating System Junk Files
+# ------------------------------------------------------------------------------
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+desktop.ini
+
+# Linux
+*~
+
+# ------------------------------------------------------------------------------
+# Editors & IDEs
+# ------------------------------------------------------------------------------
+# VS Code
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# JetBrains (CLion / Rider / PyCharm)
+.idea/
+*.iml
+
+# Vim / Emacs / Generic swap files
+*.swp
+*.swo
+*~
+*.bak
+*.tmp
+
+# ------------------------------------------------------------------------------
+# Logs & Crash Reports
+# ------------------------------------------------------------------------------
+*.log
+crash_report*

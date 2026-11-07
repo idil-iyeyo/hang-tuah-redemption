@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bq286pfp5yhvd"]
+
+[ext_resource type="Script" uid="uid://i1ilfg2b68xq" path="res://scenes/enemies/bile_spewer.gd" id="1_bile_script"]
+[ext_resource type="Texture2D" uid="uid://djnkyrpg1e6kt" path="res://assets/textures/enemies/BatikJellyfishSpitter.png" id="2_62ioo"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bile"]
+radius = 30.0
+
+[node name="BileSpewer" type="Area2D" unique_id=83969917]
+scale = Vector2(2, 2)
+script = ExtResource("1_bile_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=810966264]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("2_62ioo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=596127435]
+shape = SubResource("CircleShape2D_bile")
+
+[node name="HPBar" type="ProgressBar" parent="." unique_id=379314240]
+custom_minimum_size = Vector2(60, 10)
+offset_left = -30.0
+offset_top = -48.0
+offset_right = 30.0
+offset_bottom = -38.0
+max_value = 8.0
+value = 8.0
+show_percentage = false
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=983440477]
+rect = Rect2(-36, -36, 72, 72)

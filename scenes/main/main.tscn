@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bdyyjacammlqq"]
+
+[ext_resource type="Script" uid="uid://dodjst1vltpcv" path="res://scenes/main/main.gd" id="1_main_script"]
+[ext_resource type="PackedScene" uid="uid://bea78i2dge0cf" path="res://scenes/player/player.tscn" id="2_player_scene"]
+[ext_resource type="PackedScene" uid="uid://bcgud4xj6qyw" path="res://scenes/ui/hud.tscn" id="3_hud_scene"]
+[ext_resource type="PackedScene" uid="uid://shhkkhmgf81" path="res://scenes/environment/starfield_background.tscn" id="4_starfield_scene"]
+
+[node name="Main" type="Node2D" unique_id=2045579737]
+script = ExtResource("1_main_script")
+
+[node name="StarfieldBackground" parent="." unique_id=1713730287 instance=ExtResource("4_starfield_scene")]
+
+[node name="HUD" parent="." unique_id=1817520878 instance=ExtResource("3_hud_scene")]
+
+[node name="Player" parent="." unique_id=511629614 instance=ExtResource("2_player_scene")]
+position = Vector2(250, 540)
+
+[node name="SpawnTimer" type="Timer" parent="." unique_id=570771514]
+autostart = true

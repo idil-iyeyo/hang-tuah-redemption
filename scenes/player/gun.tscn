@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://dxm762rb1ykq5"]
+
+[ext_resource type="Script" uid="uid://bke72wtkpvknh" path="res://scenes/player/gun.gd" id="1_gun_script"]
+[ext_resource type="Texture2D" uid="uid://bvcu2olan8txh" path="res://assets/textures/Gun_Mid.png" id="2_gun_mid"]
+[ext_resource type="Texture2D" uid="uid://cpf70s2pwh15a" path="res://assets/textures/Gun-Cannon.png" id="3_gun_cannon"]
+
+[node name="Gun" type="Node2D" unique_id=738073412]
+script = ExtResource("1_gun_script")
+
+[node name="GunMount" type="Node2D" parent="." unique_id=1340160131]
+
+[node name="GunSpriteCenter" type="Sprite2D" parent="GunMount" unique_id=3765274]
+visible = false
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(7, 3)
+scale = Vector2(2, 2)
+texture = ExtResource("2_gun_mid")
+
+[node name="GunSpriteTop" type="Sprite2D" parent="GunMount" unique_id=522038564]
+visible = false
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(-8, -7)
+scale = Vector2(2, 2)
+texture = ExtResource("2_gun_mid")
+
+[node name="GunSpriteBottom" type="Sprite2D" parent="GunMount" unique_id=1761593425]
+visible = false
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(-8, 13)
+scale = Vector2(2, 2)
+texture = ExtResource("2_gun_mid")
+
+[node name="GunSpriteCannon" type="Sprite2D" parent="GunMount" unique_id=398179775]
+visible = false
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(17, 10)
+scale = Vector2(5, 5)
+texture = ExtResource("3_gun_cannon")
+
+[node name="ShootSoundPlayer" type="AudioStreamPlayer" parent="." unique_id=527532178]
+volume_db = -10.0
+
+[node name="CannonSoundPlayer" type="AudioStreamPlayer" parent="." unique_id=2071072783]
+volume_db = -10.0
+
+[node name="LaserSoundPlayer" type="AudioStreamPlayer" parent="." unique_id=987162534]
+volume_db = -15.0
+
+[node name="CustomSoundPlayer" type="AudioStreamPlayer" parent="." unique_id=1498263158]

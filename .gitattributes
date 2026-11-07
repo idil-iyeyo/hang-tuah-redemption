@@ -1,0 +1,58 @@
+# ==============================================================================
+# Godot 4 Git Attributes
+# Project: Hang Tuah Redemption
+# Ensures proper line ending handling and binary file protection
+# ==============================================================================
+
+# Default rule: normalize line endings for all text files to LF
+* text=auto eol=lf
+
+# ------------------------------------------------------------------------------
+# Godot Text Files
+# ------------------------------------------------------------------------------
+*.tscn text eol=lf
+*.tres text eol=lf
+*.godot text eol=lf
+*.gd text eol=lf
+*.gdshader text eol=lf
+*.uid text eol=lf
+*.cfg text eol=lf
+*.import text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.py text eol=lf
+*.java text eol=lf
+*.gdap text eol=lf
+*.xml text eol=lf
+
+# ------------------------------------------------------------------------------
+# Godot Binary Resources & Scenes
+# ------------------------------------------------------------------------------
+*.scn binary
+*.res binary
+
+# ------------------------------------------------------------------------------
+# Multimedia & Binary Assets
+# ------------------------------------------------------------------------------
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.svg text eol=lf
+*.wav binary
+*.ogg binary
+*.mp3 binary
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
+
+# ------------------------------------------------------------------------------
+# Git LFS (Uncomment if tracking large binary assets with Git LFS)
+# ------------------------------------------------------------------------------
+# *.wav filter=lfs diff=lfs merge=lfs -text
+# *.ogg filter=lfs diff=lfs merge=lfs -text
+# *.png filter=lfs diff=lfs merge=lfs -text
+# *.blend filter=lfs diff=lfs merge=lfs -text
+# *.fbx filter=lfs diff=lfs merge=lfs -text
+# *.glb filter=lfs diff=lfs merge=lfs -text

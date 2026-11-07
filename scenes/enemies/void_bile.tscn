@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bfwmqx7sxs4js"]
+
+[ext_resource type="Script" uid="uid://cim2pvhirkne6" path="res://scenes/enemies/void_bile.gd" id="1_void_script"]
+[ext_resource type="Texture2D" uid="uid://dxxb6p7qxl153" path="res://assets/textures/enemies/Malayan Ghost Army - Enemy Basic.png" id="2_du30s"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_void"]
+radius = 32.0
+
+[node name="VoidBile" type="Area2D" unique_id=264697426]
+scale = Vector2(2, 2)
+script = ExtResource("1_void_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=169717089]
+texture_filter = 1
+scale = Vector2(0.125, 0.125)
+texture = ExtResource("2_du30s")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=598135997]
+shape = SubResource("CircleShape2D_void")
+
+[node name="HPBar" type="ProgressBar" parent="." unique_id=109421153]
+custom_minimum_size = Vector2(64, 10)
+offset_left = -32.0
+offset_top = -50.0
+offset_right = 32.0
+offset_bottom = -40.0
+max_value = 8.0
+value = 8.0
+show_percentage = false
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1523761403]
+rect = Rect2(-40, -40, 80, 80)

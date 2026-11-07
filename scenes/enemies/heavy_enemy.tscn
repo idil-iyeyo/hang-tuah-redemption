@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bhogmapctgypu"]
+
+[ext_resource type="Script" uid="uid://8udv121icfd3" path="res://scenes/enemies/heavy_enemy.gd" id="1_heavy_script"]
+[ext_resource type="Texture2D" uid="uid://dl30d57dwaays" path="res://assets/textures/enemies/Gasing Trooper - Enemy Basic.png" id="2_n2l02"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_heavy"]
+radius = 38.0
+
+[node name="HeavyEnemy" type="Area2D" unique_id=1553204826]
+scale = Vector2(1.5, 1.5)
+script = ExtResource("1_heavy_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1545450194]
+texture_filter = 1
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_n2l02")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=181579293]
+shape = SubResource("CircleShape2D_heavy")
+
+[node name="HPBar" type="ProgressBar" parent="." unique_id=114401041]
+custom_minimum_size = Vector2(80, 12)
+offset_left = -40.0
+offset_top = -58.0
+offset_right = 40.0
+offset_bottom = -46.0
+max_value = 12.0
+value = 12.0
+show_percentage = false
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1287854926]
+rect = Rect2(-50, -50, 100, 100)

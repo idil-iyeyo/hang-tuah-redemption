@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Background Space Gradients -->
+    <radialGradient id="bgGrad" cx="50%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#182642"/>
+      <stop offset="60%" stop-color="#0c1220"/>
+      <stop offset="100%" stop-color="#05070c"/>
+    </radialGradient>
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f0ff"/>
+      <stop offset="35%" stop-color="#1a508b"/>
+      <stop offset="70%" stop-color="#ffd700"/>
+      <stop offset="100%" stop-color="#00a8ff"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff5b8"/>
+      <stop offset="35%" stop-color="#ffd700"/>
+      <stop offset="75%" stop-color="#d48806"/>
+      <stop offset="100%" stop-color="#874d00"/>
+    </linearGradient>
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="25%" stop-color="#7bf0ff"/>
+      <stop offset="70%" stop-color="#00b4ff"/>
+      <stop offset="100%" stop-color="#0048aa"/>
+    </linearGradient>
+    <linearGradient id="shipHull" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#242c3d"/>
+      <stop offset="30%" stop-color="#4d5c7a"/>
+      <stop offset="50%" stop-color="#dce5f5"/>
+      <stop offset="70%" stop-color="#4d5c7a"/>
+      <stop offset="100%" stop-color="#242c3d"/>
+    </linearGradient>
+    <linearGradient id="wingLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3d4e6e"/>
+      <stop offset="50%" stop-color="#1c2434"/>
+      <stop offset="100%" stop-color="#0d131c"/>
+    </linearGradient>
+    <linearGradient id="wingRight" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#5a6f9c"/>
+      <stop offset="50%" stop-color="#283348"/>
+      <stop offset="100%" stop-color="#0d131c"/>
+    </linearGradient>
+    <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="30%" stop-color="#00f0ff" stop-opacity="0.8"/>
+      <stop offset="70%" stop-color="#0066ff" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#002288" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="thrusterFlame" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="25%" stop-color="#66ffff"/>
+      <stop offset="65%" stop-color="#0088ff"/>
+      <stop offset="100%" stop-color="#001144" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer Rounded Shield / Hexagonal Emblem -->
+  <!-- Outer Rim Shadow -->
+  <polygon points="256,16 478,96 478,356 256,496 34,356 34,96" fill="none" stroke="#000d18" stroke-width="16" stroke-linejoin="round"/>
+  <!-- Outer Bevel Rim -->
+  <polygon points="256,18 474,98 474,354 256,492 38,354 38,98" fill="url(#borderGrad)" stroke="#001a33" stroke-width="4" stroke-linejoin="round"/>
+  <!-- Inner Shield Void -->
+  <polygon points="256,32 454,106 454,342 256,474 58,342 58,106" fill="url(#bgGrad)" stroke="#1a2b47" stroke-width="3" stroke-linejoin="round"/>
+
+  <!-- High-Tech Circuit & Reticle Accents in Background -->
+  <circle cx="256" cy="248" r="168" fill="none" stroke="#00f0ff" stroke-width="1.5" stroke-dasharray="6 8" opacity="0.35"/>
+  <circle cx="256" cy="248" r="132" fill="none" stroke="#ffd700" stroke-width="1" opacity="0.25"/>
+  <circle cx="256" cy="248" r="90" fill="none" stroke="#00f0ff" stroke-width="1.5" opacity="0.4"/>
+  
+  <!-- Reticle Crosshairs -->
+  <line x1="256" y1="76" x2="256" y2="116" stroke="#00f0ff" stroke-width="3" opacity="0.6" stroke-linecap="round"/>
+  <line x1="256" y1="380" x2="256" y2="420" stroke="#00f0ff" stroke-width="3" opacity="0.6" stroke-linecap="round"/>
+  <line x1="88" y1="248" x2="128" y2="248" stroke="#00f0ff" stroke-width="3" opacity="0.6" stroke-linecap="round"/>
+  <line x1="384" y1="248" x2="424" y2="248" stroke="#00f0ff" stroke-width="3" opacity="0.6" stroke-linecap="round"/>
+
+  <!-- Diagonal Tech Slits -->
+  <line x1="136" y1="128" x2="164" y2="156" stroke="#ffd700" stroke-width="2.5" opacity="0.5" stroke-linecap="round"/>
+  <line x1="376" y1="128" x2="348" y2="156" stroke="#ffd700" stroke-width="2.5" opacity="0.5" stroke-linecap="round"/>
+
+  <!-- Nebula Background Flare -->
+  <circle cx="256" cy="248" r="140" fill="url(#coreGlow)" opacity="0.45"/>
+
+  <!-- ==================== CROSSED CEREMONIAL PLASMA KERIS (BACKGROUND) ==================== -->
+  <!-- Keris 1 (Top-Left to Bottom-Right) -->
+  <g transform="rotate(-34 256 248)">
+    <!-- Blade Waves (Undulating Pamor) -->
+    <path d="M256,80 Q266,110 256,140 Q246,170 256,200 Q266,230 256,260 Q246,290 256,320 L256,336 L251,336 Q239,290 249,260 Q259,230 249,200 Q239,170 249,140 Q259,110 251,80 Z" fill="url(#cyanGrad)" opacity="0.85"/>
+    <!-- Keris Guard (Ganja Keris) -->
+    <path d="M234,336 L278,336 L286,346 L226,346 Z" fill="url(#goldGrad)"/>
+    <!-- Keris Hilt (Hulu Keris) -->
+    <path d="M251,346 L261,346 L264,380 Q266,396 254,402 Q242,396 246,380 Z" fill="url(#goldGrad)"/>
+  </g>
+
+  <!-- Keris 2 (Top-Right to Bottom-Left) -->
+  <g transform="rotate(34 256 248)">
+    <!-- Blade Waves (Undulating Pamor) -->
+    <path d="M256,80 Q246,110 256,140 Q266,170 256,200 Q246,230 256,260 Q266,290 256,320 L256,336 L261,336 Q273,290 263,260 Q253,230 263,200 Q273,170 263,140 Q253,110 261,80 Z" fill="url(#cyanGrad)" opacity="0.85"/>
+    <!-- Keris Guard (Ganja Keris) -->
+    <path d="M278,336 L234,336 L226,346 L286,346 Z" fill="url(#goldGrad)"/>
+    <!-- Keris Hilt (Hulu Keris) -->
+    <path d="M261,346 L251,346 L248,380 Q246,396 258,402 Q270,396 266,380 Z" fill="url(#goldGrad)"/>
+  </g>
+
+  <!-- ==================== HANG TUAH VOID INTERCEPTOR (FOREGROUND) ==================== -->
+  <!-- Plasma Thruster Exhaust Plumes -->
+  <polygon points="242,350 250,350 246,430" fill="url(#thrusterFlame)"/>
+  <polygon points="262,350 270,350 266,430" fill="url(#thrusterFlame)"/>
+  <polygon points="251,354 261,354 256,448" fill="url(#thrusterFlame)"/>
+
+  <!-- Left Swept Wing (Wau Bulan Curved Aero-Foils) -->
+  <path d="M256,220 L160,260 L92,306 L144,318 L212,298 L240,344 L256,348 Z" fill="url(#wingLeft)" stroke="#101824" stroke-width="2"/>
+  <!-- Left Wing Trim / Armor Plate -->
+  <path d="M256,240 L168,272 L116,308 L142,316 L204,298 L238,336 Z" fill="#223249" stroke="#00f0ff" stroke-width="1.5" opacity="0.9"/>
+  <!-- Left Golden Songket Wing Edge Accent -->
+  <path d="M92,306 L144,318 L130,314 L98,304 Z" fill="url(#goldGrad)"/>
+  <polygon points="124,286 128,274 132,286 144,290 132,294 128,306 124,294 112,290" fill="#ffd700" opacity="0.8"/>
+
+  <!-- Right Swept Wing -->
+  <path d="M256,220 L352,260 L420,306 L368,318 L300,298 L272,344 L256,348 Z" fill="url(#wingRight)" stroke="#101824" stroke-width="2"/>
+  <!-- Right Wing Trim / Armor Plate -->
+  <path d="M256,240 L344,272 L396,308 L370,316 L308,298 L274,336 Z" fill="#324666" stroke="#00f0ff" stroke-width="1.5" opacity="0.9"/>
+  <!-- Right Golden Songket Wing Edge Accent -->
+  <path d="M420,306 L368,318 L382,314 L414,304 Z" fill="url(#goldGrad)"/>
+  <polygon points="388,286 384,274 380,286 368,290 380,294 384,306 388,294 400,290" fill="#ffd700" opacity="0.8"/>
+
+  <!-- Outer Wingtip Cannons -->
+  <polygon points="90,300 96,276 100,300 96,312" fill="url(#goldGrad)"/>
+  <line x1="96" y1="276" x2="96" y2="260" stroke="#00f0ff" stroke-width="2" stroke-linecap="round"/>
+  <polygon points="422,300 416,276 412,300 416,312" fill="url(#goldGrad)"/>
+  <line x1="416" y1="276" x2="416" y2="260" stroke="#00f0ff" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Central Fuselage Prow -->
+  <!-- Main Fuselage Body -->
+  <polygon points="256,128 284,228 274,348 238,348 228,228" fill="url(#shipHull)" stroke="#162030" stroke-width="2"/>
+  
+  <!-- Dorsal Armor Spine (Beveled Titanium) -->
+  <polygon points="256,134 266,220 262,342 250,342 246,220" fill="#ffffff" opacity="0.2"/>
+  <polygon points="256,134 250,220 248,342 256,346" fill="#1c283d" opacity="0.4"/>
+  
+  <!-- Forward Spear Tip (Keris Nose) -->
+  <polygon points="256,112 264,152 256,160 248,152" fill="url(#goldGrad)"/>
+
+  <!-- Cockpit Canopy (Glowing Cyan Energy Core) -->
+  <path d="M256,182 Q268,212 264,250 Q256,258 248,250 Q244,212 256,182 Z" fill="url(#cyanGrad)" stroke="#00f0ff" stroke-width="2"/>
+  <!-- Cockpit Glint -->
+  <ellipse cx="254" cy="206" rx="4" ry="14" fill="#ffffff" opacity="0.75" transform="rotate(-12 254 206)"/>
+
+  <!-- Royal Medallion on Fuselage (Malay Solar Star) -->
+  <circle cx="256" cy="286" r="12" fill="url(#goldGrad)" stroke="#ffffff" stroke-width="1.5"/>
+  <circle cx="256" cy="286" r="5" fill="#00f0ff"/>
+
+  <!-- Flanking Stars on Crest -->
+  <!-- Left Star -->
+  <polygon points="76,210 82,192 88,210 106,216 88,222 82,240 76,222 58,216" fill="url(#goldGrad)"/>
+  <!-- Right Star -->
+  <polygon points="436,210 430,192 424,210 406,216 424,222 430,240 436,222 454,216" fill="url(#goldGrad)"/>
+</svg>

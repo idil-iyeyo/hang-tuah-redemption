@@ -1,0 +1,10 @@
+[config]
+
+name="HMSAccountPlugin"
+binary_type="local"
+binary="HMSAccountPlugin.aar"
+
+[dependencies]
+
+remote=["com.huawei.hms:hwid:6.12.0.300"]
+custom_maven_repos=["https://developer.huawei.com/repo/"]

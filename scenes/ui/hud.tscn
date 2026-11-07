@@ -1,0 +1,1214 @@
+[gd_scene format=3 uid="uid://bcgud4xj6qyw"]
+
+[ext_resource type="Script" uid="uid://demyqaa0ym2at" path="res://scenes/ui/hud.gd" id="1_hud_script"]
+[ext_resource type="Script" uid="uid://cx4qk7lolspkr" path="res://scenes/ui/virtual_joystick.gd" id="2_joystick_script"]
+[ext_resource type="Script" uid="uid://xlaamvntltgb" path="res://scenes/ui/mobile_fire_button.gd" id="3_fire_script"]
+[ext_resource type="Texture2D" uid="uid://c2pi2wsma0ku" path="res://assets/textures/game_logo.png" id="4_game_logo"]
+[ext_resource type="PackedScene" uid="uid://buwq48kdxxyos" path="res://scenes/ui/comic_slides.tscn" id="5_comic_slides"]
+
+[node name="HUD" type="CanvasLayer" unique_id=15779442]
+process_mode = 3
+script = ExtResource("1_hud_script")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1787506245]
+offset_right = 500.0
+offset_bottom = 240.0
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1236285168]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HealthContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=584135981]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="HealthLabel" type="Label" parent="MarginContainer/VBoxContainer/HealthContainer" unique_id=275548011]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "HP:"
+
+[node name="HealthBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/HealthContainer" unique_id=515554282]
+custom_minimum_size = Vector2(220, 26)
+layout_mode = 2
+value = 100.0
+
+[node name="ShieldLabel" type="Label" parent="MarginContainer/VBoxContainer/HealthContainer" unique_id=732591962]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "Shield: [0]"
+
+[node name="ScoreLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=478119747]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Score: 0"
+
+[node name="WaveLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=218944370]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "Wave: 1"
+
+[node name="ProgressLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=898832660]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 18
+text = "Remaining: 8"
+
+[node name="PointsLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=903988997]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.25, 1)
+theme_override_font_sizes/font_size = 20
+text = "Upgrade Points: 1"
+
+[node name="GunStatusLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=725764730]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.9, 0.6, 1)
+theme_override_font_sizes/font_size = 18
+text = "Blaster: [LOCKED]"
+
+[node name="BossBarContainer" type="VBoxContainer" parent="." unique_id=1829145005]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -380.0
+offset_top = 25.0
+offset_right = 380.0
+offset_bottom = 90.0
+grow_horizontal = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="BossTitleLabel" type="Label" parent="BossBarContainer" unique_id=925695525]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.25, 0.25, 1)
+theme_override_font_sizes/font_size = 22
+text = "BOSS: DREADNOUGHT TITAN"
+horizontal_alignment = 1
+
+[node name="BossProgressBar" type="ProgressBar" parent="BossBarContainer" unique_id=1828970310]
+custom_minimum_size = Vector2(760, 24)
+layout_mode = 2
+max_value = 50.0
+value = 50.0
+
+[node name="BannerContainer" type="VBoxContainer" parent="." unique_id=339488217]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -450.0
+offset_top = -90.0
+offset_right = 450.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="BannerTitle" type="Label" parent="BannerContainer" unique_id=1000135736]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "WAVE 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BannerSubtitle" type="Label" parent="BannerContainer" unique_id=1674744326]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 26
+text = "WARM-UP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ShopContainer" type="PanelContainer" parent="." unique_id=1458986499]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -550.0
+offset_top = -340.0
+offset_right = 550.0
+offset_bottom = 340.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="ShopContainer" unique_id=904494389]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 28
+
+[node name="ShopVBox" type="VBoxContainer" parent="ShopContainer/Margin" unique_id=28133565]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="ShopHeader" type="Label" parent="ShopContainer/Margin/ShopVBox" unique_id=798515421]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 40
+text = "UPGRADE BAY"
+horizontal_alignment = 1
+
+[node name="ShopPoints" type="Label" parent="ShopContainer/Margin/ShopVBox" unique_id=1596523117]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 26
+text = "💎 Upgrade Points: 1"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="ShopContainer/Margin/ShopVBox" unique_id=1245477570]
+layout_mode = 2
+
+[node name="ItemsBox" type="VBoxContainer" parent="ShopContainer/Margin/ShopVBox" unique_id=1784072754]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="ShieldRow" type="HBoxContainer" parent="ShopContainer/Margin/ShopVBox/ItemsBox" unique_id=293445955]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="ShieldInfo" type="Label" parent="ShopContainer/Margin/ShopVBox/ItemsBox/ShieldRow" unique_id=2085097523]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Kinetic Shield • Lv 1"
+
+[node name="ShieldButton" type="Button" parent="ShopContainer/Margin/ShopVBox/ItemsBox/ShieldRow" unique_id=248218066]
+custom_minimum_size = Vector2(320, 66)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "UNLOCK [1 PT]"
+
+[node name="SpeedRow" type="HBoxContainer" parent="ShopContainer/Margin/ShopVBox/ItemsBox" unique_id=2036650987]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="SpeedInfo" type="Label" parent="ShopContainer/Margin/ShopVBox/ItemsBox/SpeedRow" unique_id=1741744292]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Thrusters • Lv 1"
+
+[node name="SpeedButton" type="Button" parent="ShopContainer/Margin/ShopVBox/ItemsBox/SpeedRow" unique_id=1433787423]
+custom_minimum_size = Vector2(320, 66)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "UPGRADE [2 PTS]"
+
+[node name="GunRow" type="HBoxContainer" parent="ShopContainer/Margin/ShopVBox/ItemsBox" unique_id=1630700121]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="GunInfo" type="Label" parent="ShopContainer/Margin/ShopVBox/ItemsBox/GunRow" unique_id=269810910]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Plasma Blaster • Lv 1"
+
+[node name="GunButton" type="Button" parent="ShopContainer/Margin/ShopVBox/ItemsBox/GunRow" unique_id=2092428123]
+custom_minimum_size = Vector2(320, 66)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "UNLOCK [2 PTS]"
+
+[node name="HSeparator2" type="HSeparator" parent="ShopContainer/Margin/ShopVBox" unique_id=193270647]
+layout_mode = 2
+
+[node name="ResetUpgradesButton" type="Button" parent="ShopContainer/Margin/ShopVBox" unique_id=193270650]
+custom_minimum_size = Vector2(460, 52)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 0.45, 0.45, 1)
+theme_override_colors/font_hover_color = Color(1, 0.7, 0.7, 1)
+theme_override_font_sizes/font_size = 20
+text = "↺ RESET UPGRADES (REFUND 0 PTS)"
+
+[node name="ShopStatusLabel" type="Label" parent="ShopContainer/Margin/ShopVBox" unique_id=193270651]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 1, 0.5, 1)
+theme_override_font_sizes/font_size = 18
+text = "All spent upgrade points refunded!"
+horizontal_alignment = 1
+
+[node name="ContinueButton" type="Button" parent="ShopContainer/Margin/ShopVBox" unique_id=247723449]
+custom_minimum_size = Vector2(460, 68)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 24
+text = "CONTINUE TO NEXT WAVE ➔"
+
+[node name="GameOverContainer" type="VBoxContainer" parent="." unique_id=232443747]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -480.0
+offset_top = -140.0
+offset_right = 480.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="GameOverTitle" type="Label" parent="GameOverContainer" unique_id=201651172]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.25, 0.25, 1)
+theme_override_font_sizes/font_size = 56
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameOverStats" type="Label" parent="GameOverContainer" unique_id=387060561]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Wave Reached: 1  |  Final Score: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HighScoreAlert" type="Label" parent="GameOverContainer" unique_id=387060562]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 24
+text = "★ NEW HIGH SCORE RECORD! ★"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameOverMenuButton" type="Button" parent="GameOverContainer" unique_id=1504967299]
+custom_minimum_size = Vector2(280, 46)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
+text = "MAIN MENU [M]"
+
+[node name="WelcomeContainer" type="VBoxContainer" parent="." unique_id=883192001]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -500.0
+offset_top = -330.0
+offset_right = 500.0
+offset_bottom = 330.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="TitleBox" type="VBoxContainer" parent="WelcomeContainer" unique_id=883192002]
+layout_mode = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="LogoRect" type="TextureRect" parent="WelcomeContainer/TitleBox" unique_id=883192010]
+custom_minimum_size = Vector2(140, 140)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("4_game_logo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="GameTitle" type="Label" parent="WelcomeContainer/TitleBox" unique_id=883192003]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.25, 0.85, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.1, 0.4, 0.8, 0.6)
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 4
+theme_override_font_sizes/font_size = 72
+text = "Hang Tuah's Redemtion"
+horizontal_alignment = 1
+
+[node name="GameSubtitle" type="Label" parent="WelcomeContainer/TitleBox" unique_id=883192004]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.25, 1)
+theme_override_font_sizes/font_size = 24
+text = "A future's tale"
+horizontal_alignment = 1
+
+[node name="ButtonsVBox" type="VBoxContainer" parent="WelcomeContainer" unique_id=883192005]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="PlayButton" type="Button" parent="WelcomeContainer/ButtonsVBox" unique_id=883192006]
+custom_minimum_size = Vector2(340, 56)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0.3, 1, 0.6, 1)
+theme_override_font_sizes/font_size = 28
+text = "▶  PLAY"
+
+[node name="SettingButton" type="Button" parent="WelcomeContainer/ButtonsVBox" unique_id=883192007]
+custom_minimum_size = Vector2(340, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 22
+text = "⚙  Settings"
+
+[node name="CreditButton" type="Button" parent="WelcomeContainer/ButtonsVBox" unique_id=883192008]
+custom_minimum_size = Vector2(340, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 22
+text = "ℹ  Credit"
+
+[node name="WelcomeAccountContainer" type="MarginContainer" parent="." unique_id=883192050]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -440.0
+offset_top = 36.0
+offset_right = -40.0
+offset_bottom = 100.0
+grow_horizontal = 0
+mouse_filter = 0
+
+[node name="HuaweiSignInButton" type="Button" parent="WelcomeAccountContainer" unique_id=883192051]
+custom_minimum_size = Vector2(360, 52)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 0.85, 0.85, 1)
+theme_override_font_sizes/font_size = 20
+text = "🔴  Sign in with HUAWEI ID"
+
+[node name="HuaweiProfileContainer" type="PanelContainer" parent="WelcomeAccountContainer" unique_id=883192052]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+
+[node name="ProfileMargin" type="MarginContainer" parent="WelcomeAccountContainer/HuaweiProfileContainer" unique_id=883192053]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 8
+
+[node name="ProfileHBox" type="HBoxContainer" parent="WelcomeAccountContainer/HuaweiProfileContainer/ProfileMargin" unique_id=883192054]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 2
+
+[node name="PilotBadgeLabel" type="Label" parent="WelcomeAccountContainer/HuaweiProfileContainer/ProfileMargin/ProfileHBox" unique_id=883192055]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "👨‍🚀 Cadet Hang Tuah"
+vertical_alignment = 1
+
+[node name="ProfileSignOutButton" type="Button" parent="WelcomeAccountContainer/HuaweiProfileContainer/ProfileMargin/ProfileHBox" unique_id=883192056]
+custom_minimum_size = Vector2(90, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.8, 0.9, 1)
+theme_override_colors/font_hover_color = Color(1, 0.4, 0.4, 1)
+theme_override_font_sizes/font_size = 14
+text = "Sign Out"
+
+[node name="CreditModal" type="PanelContainer" parent="." unique_id=883192020]
+visible = false
+z_index = 25
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -440.0
+offset_top = -250.0
+offset_right = 440.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="CreditModal" unique_id=883192021]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 30
+
+[node name="VBox" type="VBoxContainer" parent="CreditModal/Margin" unique_id=883192022]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="ModalTitle" type="Label" parent="CreditModal/Margin/VBox" unique_id=883192023]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 32
+text = "HANG TUAH REDEMTION VERSION 1.0.3 - CREDITS"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="CreditModal/Margin/VBox" unique_id=883192024]
+layout_mode = 2
+
+[node name="CreditText" type="Label" parent="CreditModal/Margin/VBox" unique_id=883192025]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "• Game Design & Development: Aiman, Usman and Aidil
+• Engine: Godot Engine 4 (Mobile & Desktop)
+• Visuals: Procedural Parallax Starfield & Dynamic Vectors
+• Audio & FX: Built-in Procedural Waveform Synthesizer, freesound.org, pixabay
+• Boss sound used: asianbeatz-riff-1.ogg by amby26 from freesound.org
+• Boss sound 2 used: Candyworld Background Music by Sunsai from freesound.org
+• Boss sound 3 used: Boss battle Loop #3 by Sirkoto51 from freesound.org
+• Laser SFX used: Microwave by earthsounds from freesound.org
+• Pair Programming Assistant: Google Antigravity AI
+•Also not forgotten, YOU(The Player)!
+"
+horizontal_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="CreditModal/Margin/VBox" unique_id=883192026]
+layout_mode = 2
+
+[node name="CreditBackButton" type="Button" parent="CreditModal/Margin/VBox" unique_id=883192027]
+custom_minimum_size = Vector2(220, 44)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
+text = "BACK"
+
+[node name="SettingsModal" type="PanelContainer" parent="." unique_id=883192030]
+process_mode = 3
+visible = false
+z_index = 25
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -300.0
+offset_right = 320.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="SettingsModal" unique_id=883192031]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 30
+
+[node name="VBox" type="VBoxContainer" parent="SettingsModal/Margin" unique_id=883192032]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="SettingsTitle" type="Label" parent="SettingsModal/Margin/VBox" unique_id=883192033]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 32
+text = "SETTINGS"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="SettingsModal/Margin/VBox" unique_id=883192034]
+layout_mode = 2
+
+[node name="SoundSection" type="VBoxContainer" parent="SettingsModal/Margin/VBox" unique_id=883192035]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SoundHeaderHBox" type="HBoxContainer" parent="SettingsModal/Margin/VBox/SoundSection" unique_id=883192036]
+layout_mode = 2
+
+[node name="SoundTitleLabel" type="Label" parent="SettingsModal/Margin/VBox/SoundSection/SoundHeaderHBox" unique_id=883192037]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "🔊 Sound Volume"
+
+[node name="SoundValueLabel" type="Label" parent="SettingsModal/Margin/VBox/SoundSection/SoundHeaderHBox" unique_id=883192038]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "100%"
+horizontal_alignment = 2
+
+[node name="SoundSlider" type="HSlider" parent="SettingsModal/Margin/VBox/SoundSection" unique_id=883192039]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="MusicSection" type="VBoxContainer" parent="SettingsModal/Margin/VBox" unique_id=2091685600]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="MusicHeaderHBox" type="HBoxContainer" parent="SettingsModal/Margin/VBox/MusicSection" unique_id=719688887]
+layout_mode = 2
+
+[node name="MusicTitleLabel" type="Label" parent="SettingsModal/Margin/VBox/MusicSection/MusicHeaderHBox" unique_id=1224908679]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "🎵 Music Volume"
+
+[node name="MusicValueLabel" type="Label" parent="SettingsModal/Margin/VBox/MusicSection/MusicHeaderHBox" unique_id=1288231124]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "100%"
+horizontal_alignment = 2
+
+[node name="MusicSlider" type="HSlider" parent="SettingsModal/Margin/VBox/MusicSection" unique_id=8310669]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="SfxSection" type="VBoxContainer" parent="SettingsModal/Margin/VBox" unique_id=883192060]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SfxHeaderHBox" type="HBoxContainer" parent="SettingsModal/Margin/VBox/SfxSection" unique_id=883192061]
+layout_mode = 2
+
+[node name="SfxTitleLabel" type="Label" parent="SettingsModal/Margin/VBox/SfxSection/SfxHeaderHBox" unique_id=883192062]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "💥 SFX Volume"
+
+[node name="SfxValueLabel" type="Label" parent="SettingsModal/Margin/VBox/SfxSection/SfxHeaderHBox" unique_id=883192063]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "100%"
+horizontal_alignment = 2
+
+[node name="SfxSlider" type="HSlider" parent="SettingsModal/Margin/VBox/SfxSection" unique_id=883192064]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="HSeparator2" type="HSeparator" parent="SettingsModal/Margin/VBox" unique_id=883192040]
+layout_mode = 2
+
+[node name="ResetSection" type="VBoxContainer" parent="SettingsModal/Margin/VBox" unique_id=883192041]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="ResetProgressButton" type="Button" parent="SettingsModal/Margin/VBox/ResetSection" unique_id=883192042]
+custom_minimum_size = Vector2(280, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 0.4, 0.4, 1)
+theme_override_colors/font_hover_color = Color(1, 0.65, 0.65, 1)
+theme_override_font_sizes/font_size = 20
+text = "Reset all progress"
+
+[node name="ResetStatusLabel" type="Label" parent="SettingsModal/Margin/VBox/ResetSection" unique_id=883192043]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 1, 0.5, 1)
+theme_override_font_sizes/font_size = 15
+text = "All progress has been reset!"
+horizontal_alignment = 1
+
+[node name="HSeparator3" type="HSeparator" parent="SettingsModal/Margin/VBox" unique_id=883192044]
+layout_mode = 2
+
+[node name="SettingsBackButton" type="Button" parent="SettingsModal/Margin/VBox" unique_id=883192045]
+custom_minimum_size = Vector2(220, 44)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
+text = "BACK"
+
+[node name="ResetConfirmModal" type="PanelContainer" parent="." unique_id=883192070]
+process_mode = 3
+visible = false
+z_index = 30
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -180.0
+offset_right = 280.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="ResetConfirmModal" unique_id=883192071]
+layout_mode = 2
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 28
+
+[node name="VBox" type="VBoxContainer" parent="ResetConfirmModal/Margin" unique_id=883192072]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="ConfirmTitle" type="Label" parent="ResetConfirmModal/Margin/VBox" unique_id=883192073]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.35, 0.35, 1)
+theme_override_font_sizes/font_size = 28
+text = "⚠️ RESET PROGRESS?"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="ResetConfirmModal/Margin/VBox" unique_id=883192074]
+layout_mode = 2
+
+[node name="ConfirmWarning" type="Label" parent="ResetConfirmModal/Margin/VBox" unique_id=883192075]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.93, 1, 1)
+theme_override_font_sizes/font_size = 17
+text = "Are you sure you want to reset all progress?
+All campaign stars, unlocked stages, and upgrade
+points will be permanently erased.
+
+This action cannot be undone."
+horizontal_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="ResetConfirmModal/Margin/VBox" unique_id=883192076]
+layout_mode = 2
+
+[node name="ButtonsHBox" type="HBoxContainer" parent="ResetConfirmModal/Margin/VBox" unique_id=883192077]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="ResetCancelButton" type="Button" parent="ResetConfirmModal/Margin/VBox/ButtonsHBox" unique_id=883192078]
+custom_minimum_size = Vector2(170, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 18
+text = "CANCEL"
+
+[node name="ResetConfirmButton" type="Button" parent="ResetConfirmModal/Margin/VBox/ButtonsHBox" unique_id=883192079]
+custom_minimum_size = Vector2(190, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 0.35, 0.35, 1)
+theme_override_colors/font_hover_color = Color(1, 0.65, 0.65, 1)
+theme_override_font_sizes/font_size = 18
+text = "YES, RESET ALL"
+
+[node name="MobileControls" type="Control" parent="." unique_id=987654321]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VirtualJoystick" type="Control" parent="MobileControls" unique_id=987654322]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 131.0
+offset_top = -303.0
+offset_right = 331.0
+offset_bottom = -103.0
+grow_vertical = 0
+mouse_filter = 1
+script = ExtResource("2_joystick_script")
+
+[node name="MobileFireButton" type="Control" parent="MobileControls" unique_id=987654323]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -244.0
+offset_top = -257.0
+offset_right = -84.0
+offset_bottom = -97.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 1
+script = ExtResource("3_fire_script")
+
+[node name="SelectLevelContainer" type="Control" parent="." unique_id=770000001]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopBarMargin" type="MarginContainer" parent="SelectLevelContainer" unique_id=770000002]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 90.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 40
+
+[node name="TopBarHBox" type="HBoxContainer" parent="SelectLevelContainer/TopBarMargin" unique_id=770000003]
+layout_mode = 2
+alignment = 1
+
+[node name="ExitToMenuButton" type="Button" parent="SelectLevelContainer/TopBarMargin/TopBarHBox" unique_id=770000004]
+custom_minimum_size = Vector2(250, 52)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "◀ Exit to Main Menu"
+
+[node name="SpacerLeftBalance" type="Control" parent="SelectLevelContainer/TopBarMargin/TopBarHBox" unique_id=770000097]
+custom_minimum_size = Vector2(226, 0)
+layout_mode = 2
+
+[node name="SpacerLeft" type="Control" parent="SelectLevelContainer/TopBarMargin/TopBarHBox" unique_id=770000005]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TabBarHBox" type="HBoxContainer" parent="SelectLevelContainer/TopBarMargin/TopBarHBox" unique_id=770000006]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="LevelsTabButton" type="Button" parent="SelectLevelContainer/TopBarMargin/TopBarHBox/TabBarHBox" unique_id=770000007]
+custom_minimum_size = Vector2(200, 52)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "★ MISSIONS"
+
+[node name="SkinsTabButton" type="Button" parent="SelectLevelContainer/TopBarMargin/TopBarHBox/TabBarHBox" unique_id=770000008]
+custom_minimum_size = Vector2(200, 52)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "🚀 HANGAR / SKINS"
+
+[node name="SpacerRight" type="Control" parent="SelectLevelContainer/TopBarMargin/TopBarHBox" unique_id=770000009]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SelectLevelStoryButton" type="Button" parent="SelectLevelContainer/TopBarMargin/TopBarHBox" unique_id=770000096]
+custom_minimum_size = Vector2(180, 52)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.95, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "📜 STORY"
+
+[node name="SelectLevelUpgradeButton" type="Button" parent="SelectLevelContainer/TopBarMargin/TopBarHBox" unique_id=770000010]
+custom_minimum_size = Vector2(280, 52)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.25, 1)
+theme_override_font_sizes/font_size = 20
+text = "💎 UPGRADE BAY"
+
+[node name="ContentMargin" type="MarginContainer" parent="SelectLevelContainer" unique_id=770000011]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 20
+
+[node name="LevelsView" type="VBoxContainer" parent="SelectLevelContainer/ContentMargin" unique_id=770000012]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="SelectLevelTitle" type="Label" parent="SelectLevelContainer/ContentMargin/LevelsView" unique_id=770000013]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 36
+text = "SELECT LEVEL"
+horizontal_alignment = 1
+
+[node name="CarouselHBox" type="HBoxContainer" parent="SelectLevelContainer/ContentMargin/LevelsView" unique_id=770000101]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="LeftArrowButton" type="Button" parent="SelectLevelContainer/ContentMargin/LevelsView/CarouselHBox" unique_id=770000102]
+custom_minimum_size = Vector2(70, 160)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 36
+text = "◀"
+
+[node name="LevelViewport" type="Control" parent="SelectLevelContainer/ContentMargin/LevelsView/CarouselHBox" unique_id=770000103]
+custom_minimum_size = Vector2(1320, 310)
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 1
+
+[node name="LevelTrack" type="Control" parent="SelectLevelContainer/ContentMargin/LevelsView/CarouselHBox/LevelViewport" unique_id=770000104]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="LevelGrid" type="GridContainer" parent="SelectLevelContainer/ContentMargin/LevelsView/CarouselHBox/LevelViewport/LevelTrack" unique_id=770000015]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 12.0
+offset_top = -142.0
+offset_right = 1308.0
+offset_bottom = 142.0
+grow_vertical = 2
+theme_override_constants/h_separation = 24
+theme_override_constants/v_separation = 24
+columns = 5
+
+[node name="RightArrowButton" type="Button" parent="SelectLevelContainer/ContentMargin/LevelsView/CarouselHBox" unique_id=770000105]
+custom_minimum_size = Vector2(70, 160)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 36
+text = "▶"
+
+[node name="PaginationHBox" type="HBoxContainer" parent="SelectLevelContainer/ContentMargin/LevelsView" unique_id=770000016]
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="PageIndicatorLabel" type="Label" parent="SelectLevelContainer/ContentMargin/LevelsView/PaginationHBox" unique_id=770000018]
+custom_minimum_size = Vector2(240, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "PAGE 1 / 2"
+horizontal_alignment = 1
+
+[node name="SkinsView" type="VBoxContainer" parent="SelectLevelContainer/ContentMargin" unique_id=770000020]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="SkinsTitle" type="Label" parent="SelectLevelContainer/ContentMargin/SkinsView" unique_id=770000021]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.25, 1)
+theme_override_font_sizes/font_size = 36
+text = "FLEET HANGAR - SHIP SKINS"
+horizontal_alignment = 1
+
+[node name="SkinsSubtitle" type="Label" parent="SelectLevelContainer/ContentMargin/SkinsView" unique_id=770000022]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 20
+text = "Equip custom hulls and hull modulations for combat operations"
+horizontal_alignment = 1
+
+[node name="SkinsCenter" type="CenterContainer" parent="SelectLevelContainer/ContentMargin/SkinsView" unique_id=770000023]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SkinsGrid" type="GridContainer" parent="SelectLevelContainer/ContentMargin/SkinsView/SkinsCenter" unique_id=770000024]
+layout_mode = 2
+theme_override_constants/h_separation = 24
+theme_override_constants/v_separation = 20
+columns = 2
+
+[node name="SkinDefaultButton" type="Button" parent="SelectLevelContainer/ContentMargin/SkinsView/SkinsCenter/SkinsGrid" unique_id=770000025]
+custom_minimum_size = Vector2(400, 72)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "🔹 Standard Interceptor [EQUIPPED]"
+
+[node name="SkinCrimsonButton" type="Button" parent="SelectLevelContainer/ContentMargin/SkinsView/SkinsCenter/SkinsGrid" unique_id=770000026]
+custom_minimum_size = Vector2(400, 72)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "🔥 Crimson Raptor [EQUIP]"
+
+[node name="SkinVoidButton" type="Button" parent="SelectLevelContainer/ContentMargin/SkinsView/SkinsCenter/SkinsGrid" unique_id=770000027]
+custom_minimum_size = Vector2(400, 72)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "🔮 Void Phantom [EQUIP]"
+
+[node name="SkinGoldButton" type="Button" parent="SelectLevelContainer/ContentMargin/SkinsView/SkinsCenter/SkinsGrid" unique_id=770000028]
+custom_minimum_size = Vector2(400, 72)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "👑 Golden Aegis [EQUIP]"
+
+[node name="LevelCompletedContainer" type="PanelContainer" parent="." unique_id=770000030]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -480.0
+offset_top = -220.0
+offset_right = 480.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="LevelCompletedContainer" unique_id=770000031]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 30
+
+[node name="VBox" type="VBoxContainer" parent="LevelCompletedContainer/Margin" unique_id=770000032]
+layout_mode = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="CompletedTitle" type="Label" parent="LevelCompletedContainer/Margin/VBox" unique_id=770000033]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 1, 0.5, 1)
+theme_override_font_sizes/font_size = 48
+text = "Level completed!"
+horizontal_alignment = 1
+
+[node name="CompletedStats" type="Label" parent="LevelCompletedContainer/Margin/VBox" unique_id=770000034]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.25, 1)
+theme_override_font_sizes/font_size = 24
+text = "Sector Cleared  •  +1 Upgrade Point  •  +Score"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="LevelCompletedContainer/Margin/VBox" unique_id=770000035]
+layout_mode = 2
+
+[node name="ButtonsHBox" type="HBoxContainer" parent="LevelCompletedContainer/Margin/VBox" unique_id=770000036]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="CompletedExitButton" type="Button" parent="LevelCompletedContainer/Margin/VBox/ButtonsHBox" unique_id=770000037]
+custom_minimum_size = Vector2(220, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "EXIT"
+
+[node name="CompletedUpgradeButton" type="Button" parent="LevelCompletedContainer/Margin/VBox/ButtonsHBox" unique_id=770000038]
+custom_minimum_size = Vector2(220, 60)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.25, 1)
+theme_override_font_sizes/font_size = 22
+text = "UPGRADE"
+
+[node name="CompletedContinueButton" type="Button" parent="LevelCompletedContainer/Margin/VBox/ButtonsHBox" unique_id=770000039]
+custom_minimum_size = Vector2(360, 60)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 1, 0.6, 1)
+theme_override_font_sizes/font_size = 22
+text = "CONTINUE TO NEXT LEVEL ➔"
+
+[node name="LevelLostContainer" type="PanelContainer" parent="." unique_id=770000050]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -480.0
+offset_top = -220.0
+offset_right = 480.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="LevelLostContainer" unique_id=770000051]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 30
+
+[node name="VBox" type="VBoxContainer" parent="LevelLostContainer/Margin" unique_id=770000052]
+layout_mode = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="LostTitle" type="Label" parent="LevelLostContainer/Margin/VBox" unique_id=770000053]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.3, 0.3, 1)
+theme_override_font_sizes/font_size = 48
+text = "Level Lost!"
+horizontal_alignment = 1
+
+[node name="LostStats" type="Label" parent="LevelLostContainer/Margin/VBox" unique_id=770000054]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.75, 0.3, 1)
+theme_override_font_sizes/font_size = 24
+text = "Mission Failed • Upgrade Your Ship & Try Again!"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="LevelLostContainer/Margin/VBox" unique_id=770000055]
+layout_mode = 2
+
+[node name="ButtonsHBox" type="HBoxContainer" parent="LevelLostContainer/Margin/VBox" unique_id=770000056]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="LostExitButton" type="Button" parent="LevelLostContainer/Margin/VBox/ButtonsHBox" unique_id=770000057]
+custom_minimum_size = Vector2(220, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "EXIT"
+
+[node name="LostUpgradeButton" type="Button" parent="LevelLostContainer/Margin/VBox/ButtonsHBox" unique_id=770000058]
+custom_minimum_size = Vector2(220, 60)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.25, 1)
+theme_override_font_sizes/font_size = 22
+text = "UPGRADE"
+
+[node name="LostReplayButton" type="Button" parent="LevelLostContainer/Margin/VBox/ButtonsHBox" unique_id=770000059]
+custom_minimum_size = Vector2(360, 60)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.95, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "REPLAY LEVEL ↻"
+
+[node name="ScreenTransitionOverlay" type="ColorRect" parent="." unique_id=770000040]
+visible = false
+z_index = 50
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+
+[node name="PauseButton" type="Button" parent="." unique_id=770000070]
+process_mode = 3
+visible = false
+custom_minimum_size = Vector2(140, 48)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 772.0
+offset_top = 27.0
+offset_right = 912.0
+offset_bottom = 75.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 20
+text = "⏸ PAUSE"
+
+[node name="PauseContainer" type="PanelContainer" parent="." unique_id=770000080]
+process_mode = 3
+visible = false
+z_index = 10
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -540.0
+offset_top = -200.0
+offset_right = 540.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="PauseContainer" unique_id=770000081]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 30
+
+[node name="VBox" type="VBoxContainer" parent="PauseContainer/Margin" unique_id=770000082]
+layout_mode = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="PauseTitle" type="Label" parent="PauseContainer/Margin/VBox" unique_id=770000083]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 48
+text = "Paused"
+horizontal_alignment = 1
+
+[node name="PauseStats" type="Label" parent="PauseContainer/Margin/VBox" unique_id=770000084]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "Tactical Standby • Systems Suspended"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="PauseContainer/Margin/VBox" unique_id=770000085]
+layout_mode = 2
+
+[node name="ButtonsHBox" type="HBoxContainer" parent="PauseContainer/Margin/VBox" unique_id=770000086]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="PauseExitButton" type="Button" parent="PauseContainer/Margin/VBox/ButtonsHBox" unique_id=770000087]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "EXIT"
+
+[node name="PauseSettingsButton" type="Button" parent="PauseContainer/Margin/VBox/ButtonsHBox" unique_id=770000090]
+custom_minimum_size = Vector2(220, 60)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "⚙ SETTINGS"
+
+[node name="PauseReplayButton" type="Button" parent="PauseContainer/Margin/VBox/ButtonsHBox" unique_id=770000088]
+custom_minimum_size = Vector2(220, 60)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.25, 1)
+theme_override_font_sizes/font_size = 22
+text = "🔄 REPLAY"
+
+[node name="PauseResumeButton" type="Button" parent="PauseContainer/Margin/VBox/ButtonsHBox" unique_id=770000089]
+custom_minimum_size = Vector2(240, 60)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 1, 0.6, 1)
+theme_override_font_sizes/font_size = 22
+text = "▶ RESUME"
+
+[node name="ComicSlides" parent="." unique_id=770000095 instance=ExtResource("5_comic_slides")]
+visible = false
+z_index = 60

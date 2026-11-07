@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://ce0f1qgcvfu3b"]
+
+[ext_resource type="Script" uid="uid://48nk7mvwyub7" path="res://scenes/enemies/charger_roach.gd" id="1_charger_script"]
+[ext_resource type="Texture2D" uid="uid://cgb724j1xf1p2" path="res://assets/textures/enemies/Rhino Horn - Enemy Basic.png" id="2_tsopx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_charger"]
+size = Vector2(80, 50)
+
+[node name="ChargerRoach" type="Area2D" unique_id=725399959]
+scale = Vector2(1.5, 1.5)
+script = ExtResource("1_charger_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=687099097]
+texture_filter = 1
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_tsopx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1029808858]
+shape = SubResource("RectangleShape2D_charger")
+
+[node name="HPBar" type="ProgressBar" parent="." unique_id=2096464736]
+custom_minimum_size = Vector2(74, 10)
+offset_left = -37.0
+offset_top = -45.0
+offset_right = 37.0
+offset_bottom = -35.0
+max_value = 30.0
+value = 30.0
+show_percentage = false
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1000214935]
+rect = Rect2(-50, -35, 100, 70)
