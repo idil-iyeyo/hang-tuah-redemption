@@ -13,8 +13,8 @@ enum GameState {
 @export var projectile_scene: PackedScene = preload("res://scenes/enemies/projectile.tscn")
 @export var heavy_enemy_scene: PackedScene = preload("res://scenes/enemies/heavy_enemy.tscn")
 @export var bile_spewer_scene: PackedScene = preload("res://scenes/enemies/bile_spewer.tscn")
-@export var boss_scene: PackedScene = preload("res://scenes/bosses/boss.tscn")
-@export var dragon_roach_scene: PackedScene = preload("res://scenes/bosses/dragon_roach.tscn")
+@export var boss_scene: PackedScene = preload("res://scenes/bosses/boss_waurior.tscn")
+@export var dragon_roach_scene: PackedScene = preload("res://scenes/bosses/boss_ship.tscn")
 @export var charger_roach_scene: PackedScene = preload("res://scenes/enemies/charger_roach.tscn")
 @export var void_bile_scene: PackedScene = preload("res://scenes/enemies/void_bile.tscn")
 @export var bile_breeder_scene: PackedScene = preload("res://scenes/enemies/bile_breeder.tscn")
@@ -759,7 +759,7 @@ func _spawn_boss_encounter() -> void:
 		var minion_summon: bool = bool(boss_data.get("minion_summon", stage_level_minion_summon))
 
 		var boss_inst: Area2D = null
-		if b_type == "dragon_roach" or b_type == "roach":
+		if b_type == "dragon_roach" or b_type == "roach" or b_type == "ship" or b_type == "boss_ship":
 			if dragon_roach_scene:
 				boss_inst = dragon_roach_scene.instantiate() as Area2D
 		else:

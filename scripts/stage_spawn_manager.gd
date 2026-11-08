@@ -148,7 +148,7 @@ const STAGE_SPAWN_DATABASE: Dictionary = {
 				"health": 225,
 				"position": Vector2(1950.0, 540.0),
 				"target_y": 540.0,
-				"speed_multiplier": 0.9,
+				"speed_multiplier": 0.75,
 				"minion_summon": false
 			}
 		]
@@ -258,7 +258,7 @@ const STAGE_SPAWN_DATABASE: Dictionary = {
 				"health": 500,
 				"position": Vector2(1950.0, 540.0),
 				"target_y": 540.0,
-				"speed_multiplier": 1.0,
+				"speed_multiplier": 0.6,
 				"minion_summon": true
 			}
 		]
@@ -371,7 +371,7 @@ const STAGE_SPAWN_DATABASE: Dictionary = {
 				"health": 600,
 				"position": Vector2(1950.0, 340.0),
 				"target_y": 340.0,
-				"speed_multiplier": 0.7,
+				"speed_multiplier": 0.6,
 				"minion_summon": true
 			},
 			{
@@ -380,7 +380,7 @@ const STAGE_SPAWN_DATABASE: Dictionary = {
 				"health": 600,
 				"position": Vector2(2050.0, 740.0),
 				"target_y": 740.0,
-				"speed_multiplier": 0.6,
+				"speed_multiplier": 0.5,
 				"minion_summon": true
 			}
 		]
@@ -490,7 +490,7 @@ const STAGE_SPAWN_DATABASE: Dictionary = {
 				"health": 1000,
 				"position": Vector2(1950.0, 420.0),
 				"target_y": 420.0,
-				"speed_multiplier": 0.55,
+				"speed_multiplier": 0.35,
 				"minion_summon": true
 			},
 			{
@@ -499,7 +499,7 @@ const STAGE_SPAWN_DATABASE: Dictionary = {
 				"health": 950,
 				"position": Vector2(2080.0, 680.0),
 				"target_y": 680.0,
-				"speed_multiplier": 0.55,
+				"speed_multiplier": 0.35,
 				"minion_summon": true
 			}
 		]

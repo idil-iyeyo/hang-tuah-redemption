@@ -359,12 +359,12 @@ func _spawn_blaster_bolt(
 			bolt.set_emergency_style()
 
 
-func take_damage(amount: int = 20) -> void:
+func take_damage(amount: int = 20, bypass_shield: bool = false) -> void:
 	if not is_alive:
 		return
 
-	# Kinetic Shield Absorption (absorbs 1 damage instance per shield point)
-	if current_shields > 0:
+	# Kinetic Shield Absorption (absorbs 1 damage instance per shield point unless bypassed by lethal strikes)
+	if not bypass_shield and current_shields > 0:
 		current_shields -= 1
 		shield_changed.emit(current_shields, shield_level * 2)
 		_flash_shield()
@@ -390,6 +390,17 @@ func take_damage(amount: int = 20) -> void:
 
 	if current_health <= 0:
 		die()
+
+
+## Instantly obliterates the player, stripping all shields and health regardless of upgrades
+func lethal_hit() -> void:
+	if not is_alive:
+		return
+	current_shields = 0
+	current_health = 0
+	shield_changed.emit(0, shield_level * 2)
+	health_changed.emit(0, max_health)
+	die()
 
 
 func heal(amount: int) -> void:

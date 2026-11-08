@@ -19,7 +19,7 @@ import json
 import struct
 import zlib
 
-BASE_DIR = "/Users/idil/GodotProjectFile/new-game-auto"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def check_file_exists(rel_path):
     path = os.path.join(BASE_DIR, rel_path)
@@ -245,8 +245,8 @@ def verify_gdscript_syntax():
         "scenes/enemies/charger_roach.gd",
         "scenes/enemies/void_bile.gd",
         "scenes/enemies/projectile.gd",
-        "scenes/bosses/boss.gd",
-        "scenes/bosses/dragon_roach.gd",
+        "scenes/bosses/boss_waurior.gd",
+        "scenes/bosses/boss_ship.gd",
         "scenes/ui/comic_slides.gd"
     ]
 
@@ -450,17 +450,17 @@ def verify_pause_system():
 
 
 def verify_dragon_roach():
-    print("\n--- Verifying Dragon Roach Queen Shoot Mechanics (Spread & Stream) ---")
-    tscn_path = os.path.join(BASE_DIR, "scenes/bosses/dragon_roach.tscn")
+    print("\n--- Verifying Minangkabau Ship Shoot Mechanics (Spread & Stream) ---")
+    tscn_path = os.path.join(BASE_DIR, "scenes/bosses/boss_ship.tscn")
     with open(tscn_path, "r", encoding="utf-8") as f:
         roach_tscn = f.read()
 
-    assert "projectile_scene = null" not in roach_tscn, "projectile_scene must not be overridden with null in dragon_roach.tscn"
-    assert "max_health = null" not in roach_tscn, "max_health must not be overridden with null in dragon_roach.tscn"
-    assert "advance_speed = null" not in roach_tscn, "advance_speed must not be overridden with null in dragon_roach.tscn"
-    print("[PASS] dragon_roach.tscn contains no null exported property overrides.")
+    assert "projectile_scene = null" not in roach_tscn, "projectile_scene must not be overridden with null in boss_ship.tscn"
+    assert "max_health = null" not in roach_tscn, "max_health must not be overridden with null in boss_ship.tscn"
+    assert "advance_speed = null" not in roach_tscn, "advance_speed must not be overridden with null in boss_ship.tscn"
+    print("[PASS] boss_ship.tscn contains no null exported property overrides.")
 
-    gd_path = os.path.join(BASE_DIR, "scenes/bosses/dragon_roach.gd")
+    gd_path = os.path.join(BASE_DIR, "scenes/bosses/boss_ship.gd")
     with open(gd_path, "r", encoding="utf-8") as f:
         roach_gd = f.read()
 
@@ -911,26 +911,26 @@ def verify_stage_spawn_database():
 def verify_universal_boss_minion_summoning():
     print("\n--- Verifying Universal Boss Minion Summoning (Waterfall Iteration 15) ---")
 
-    # 1. Verify Dreadnought Titan (boss.gd)
-    boss_gd_path = os.path.join(BASE_DIR, "scenes/bosses/boss.gd")
+    # 1. Verify Waurior Titan (boss_waurior.gd)
+    boss_gd_path = os.path.join(BASE_DIR, "scenes/bosses/boss_waurior.gd")
     with open(boss_gd_path, "r", encoding="utf-8") as f:
         boss_gd = f.read()
 
-    assert "signal minion_spawn_requested" in boss_gd, "minion_spawn_requested signal missing in boss.gd"
-    assert "@export var minion_summon: bool" in boss_gd, "minion_summon export missing in boss.gd"
-    assert "can_summon_minions: bool" in boss_gd, "setup_boss missing can_summon_minions parameter in boss.gd"
-    assert "minion_timer" in boss_gd, "minion_timer missing in boss.gd"
-    assert "minion_spawn_requested.emit" in boss_gd, "minion_spawn_requested.emit missing in boss.gd"
+    assert "signal minion_spawn_requested" in boss_gd, "minion_spawn_requested signal missing in boss_waurior.gd"
+    assert "@export var minion_summon: bool" in boss_gd, "minion_summon export missing in boss_waurior.gd"
+    assert "can_summon_minions: bool" in boss_gd, "setup_boss missing can_summon_minions parameter in boss_waurior.gd"
+    assert "minion_timer" in boss_gd, "minion_timer missing in boss_waurior.gd"
+    assert "minion_spawn_requested.emit" in boss_gd, "minion_spawn_requested.emit missing in boss_waurior.gd"
 
-    # 2. Verify Dragon Roach Queen (dragon_roach.gd)
-    roach_gd_path = os.path.join(BASE_DIR, "scenes/bosses/dragon_roach.gd")
+    # 2. Verify Minangkabau Ship (boss_ship.gd)
+    roach_gd_path = os.path.join(BASE_DIR, "scenes/bosses/boss_ship.gd")
     with open(roach_gd_path, "r", encoding="utf-8") as f:
         roach_gd = f.read()
 
-    assert "signal minion_spawn_requested" in roach_gd, "minion_spawn_requested signal missing in dragon_roach.gd"
-    assert "@export var minion_summon: bool" in roach_gd, "minion_summon export missing in dragon_roach.gd"
-    assert "can_summon_minions: bool" in roach_gd, "setup_boss missing can_summon_minions parameter in dragon_roach.gd"
-    assert "if minion_summon:" in roach_gd, "minion_summon gating check missing in dragon_roach.gd"
+    assert "signal minion_spawn_requested" in roach_gd, "minion_spawn_requested signal missing in boss_ship.gd"
+    assert "@export var minion_summon: bool" in roach_gd, "minion_summon export missing in boss_ship.gd"
+    assert "can_summon_minions: bool" in boss_gd, "setup_boss missing can_summon_minions parameter in boss_ship.gd"
+    assert "if minion_summon:" in roach_gd, "minion_summon gating check missing in boss_ship.gd"
 
     # 3. Verify main.gd universal minion hook and signal connection
     main_gd_path = os.path.join(BASE_DIR, "scenes/main/main.gd")
@@ -1505,13 +1505,13 @@ def verify_enemy_projectile_database():
         void_gd = f.read()
     assert "EnemyProjectileDatabase.get_projectile_config(\"void\")" in void_gd, "EnemyProjectileDatabase missing in void_bile.gd"
 
-    with open(os.path.join(BASE_DIR, "scenes/bosses/boss.gd"), "r", encoding="utf-8") as f:
+    with open(os.path.join(BASE_DIR, "scenes/bosses/boss_waurior.gd"), "r", encoding="utf-8") as f:
         boss_gd = f.read()
-    assert "EnemyProjectileDatabase.get_projectile_config(\"boss\"" in boss_gd, "EnemyProjectileDatabase missing in boss.gd"
+    assert "EnemyProjectileDatabase.get_projectile_config(\"boss\"" in boss_gd, "EnemyProjectileDatabase missing in boss_waurior.gd"
 
-    with open(os.path.join(BASE_DIR, "scenes/bosses/dragon_roach.gd"), "r", encoding="utf-8") as f:
+    with open(os.path.join(BASE_DIR, "scenes/bosses/boss_ship.gd"), "r", encoding="utf-8") as f:
         dragon_gd = f.read()
-    assert "EnemyProjectileDatabase.get_projectile_config(\"dragon_roach\")" in dragon_gd, "EnemyProjectileDatabase missing in dragon_roach.gd"
+    assert "EnemyProjectileDatabase.get_projectile_config(\"dragon_roach\")" in dragon_gd, "EnemyProjectileDatabase missing in boss_ship.gd"
 
     with open(os.path.join(BASE_DIR, "scenes/main/main.gd"), "r", encoding="utf-8") as f:
         main_gd = f.read()
@@ -1843,8 +1843,10 @@ def main():
     assert check_file_exists("scenes/player/player_projectile.gd")
     assert check_file_exists("scenes/ui/virtual_joystick.gd")
     assert check_file_exists("scenes/ui/mobile_fire_button.gd")
-    assert check_file_exists("scenes/bosses/dragon_roach.tscn")
-    assert check_file_exists("scenes/bosses/dragon_roach.gd")
+    assert check_file_exists("scenes/bosses/boss_ship.tscn")
+    assert check_file_exists("scenes/bosses/boss_ship.gd")
+    assert check_file_exists("scenes/bosses/boss_waurior.tscn")
+    assert check_file_exists("scenes/bosses/boss_waurior.gd")
     assert check_file_exists("assets/textures/crown_icon.svg")
 
     verify_starfield_background()

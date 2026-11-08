@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://bpvwruvrud1e3"]
 
-[ext_resource type="Script" uid="uid://xvy5s3ilypox" path="res://scenes/bosses/boss.gd" id="1_boss_script"]
+[ext_resource type="Script" uid="uid://b5xec35sfsw2x" path="res://scenes/bosses/boss_waurior.gd" id="1_wau_script"]
 [ext_resource type="Texture2D" uid="uid://dm77qlp84kkl8" path="res://assets/textures/bosses/WauMonarch - ( Boss 1).png" id="2_rdia2"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_boss"]
-size = Vector2(190, 190)
+[sub_resource type="CircleShape2D" id="CircleShape2D_05bk1"]
+radius = 65.97138
 
-[node name="Boss" type="Area2D" unique_id=529043671]
+[node name="BossWaurior" type="Area2D" unique_id=529043671]
 scale = Vector2(3, 3)
-script = ExtResource("1_boss_script")
+script = ExtResource("1_wau_script")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=181260752]
 texture_filter = 1
@@ -16,4 +16,4 @@ scale = Vector2(0.4, 0.4)
 texture = ExtResource("2_rdia2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1075444438]
-shape = SubResource("RectangleShape2D_boss")
+shape = SubResource("CircleShape2D_05bk1")

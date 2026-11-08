@@ -1,7 +1,15 @@
 extends Area2D
 
 ## Minangkabau Ship (Kapal Minangkabau) - Phantom Horned Dreadnought Boss Entity
-## Features advanced naval space-combat attack patterns, hazards & mobility maneuvers:
+## Features advanced naval space-combat attack sets, hazards & dynamic mobility:
+##
+## ATTACK SET ARCHITECTURE:
+## - SET 1 (Heavy Solar Assault): Laser Ray -> Live-tracking Railgun Stream -> Extended Thruster Surge
+## - SET 2 (Pincer & Broadside Flank): Broadside Cascade -> Twin Horn Pincer
+## - SET 3 (Close-Quarters Ambush): Extended Thruster Surge -> Point-blank Horns -> Railgun Stream
+## - SET 4 (Armada Obliteration - Enraged): Laser Ray -> Armada Bombardment -> Hyper Thruster Surge
+##
+## ATOMIC WEAPONRY:
 ## 1. Twin Horn Prow Battery (upper & lower curved gonjong turrets firing converging pincers)
 ## 2. Broadside Artillery Cascade (staggered flank cannons firing top-to-bottom waves)
 ## 3. Thruster Surge (heavy sub-light engine surge compressing player airspace with point-blank salvo)
@@ -25,6 +33,13 @@ enum AttackPattern {
 	ARMADA_BOMBARDMENT
 }
 
+enum AttackSet {
+	SET_1_HEAVY_ASSAULT,     # Laser -> Railgun Stream -> Extended Thruster Surge (Flagship Combo)
+	SET_2_PINCER_FLANK,      # Broadside Cascade -> Twin Horn Pincer
+	SET_3_CQC_AMBUSH,        # Extended Surge -> Point-Blank Horns -> Bow Stream
+	SET_4_ARMADA_OBLITERATION # Enraged: Laser -> Armada Bombardment -> Extended Surge
+}
+
 # --- Attack Cadence & Balance Tuning Constants ---
 const COOLDOWN_NORMAL: float = 2.4
 const COOLDOWN_ENRAGED: float = 1.6
@@ -45,6 +60,12 @@ const COLOR_CYAN_PLASMA: Color = Color(0.25, 0.85, 1.0)
 @export var boss_laser_scene: PackedScene = preload("res://scenes/bosses/boss_laser_beam.tscn")
 @export var minion_summon: bool = true
 
+@export_group("Thruster Surge Dash Tuning")
+@export var dash_target_x: float = -60.0
+@export var dash_speed_duration: float = 0.85
+@export var dash_warning_corridor_half_height: float = 42.0
+@export var dash_warning_to_screen_edge: bool = true
+
 # --- State Variables ---
 var current_health: int = 200
 var elapsed_time: float = 0.0
@@ -55,6 +76,11 @@ var is_surging: bool = false
 var is_enraged: bool = false
 var is_dead: bool = false
 var next_attack: AttackPattern = AttackPattern.TWIN_HORN_PINCER
+
+# Attack Set Combo State
+var is_executing_set: bool = false
+var current_attack_set: AttackSet = AttackSet.SET_1_HEAVY_ASSAULT
+var last_attack_set: int = -1
 
 # Telegraph & Surge Tuning
 var is_telegraphing_surge: bool = false
@@ -70,6 +96,7 @@ func _ready() -> void:
 	add_to_group("boss")
 	add_to_group("enemy_units")
 	add_to_group("dragon_roach")
+	add_to_group("boss_ship")
 	body_entered.connect(_on_body_entered)
 
 	# Self-healing safeguard: ensure projectile scenes are never null
@@ -130,8 +157,8 @@ func _physics_process(delta: float) -> void:
 			_trigger_arrival_crash()
 			return
 
-	# Attack cadence
-	if not is_attacking:
+	# Attack cadence: triggers when neither atomic attack nor attack set is actively executing
+	if not is_attacking and not is_executing_set:
 		attack_cooldown -= delta
 		if attack_cooldown <= 0.0:
 			attack_cooldown = COOLDOWN_ENRAGED if is_enraged else COOLDOWN_NORMAL
@@ -252,36 +279,166 @@ func _flash_dragon_maw(duration: float = 0.18) -> void:
 
 
 # -----------------------------------------------------------------------------
-# ATTACK PATTERNS & STATE MACHINE
+# RANDOMIZED ATTACK SET SYSTEM
 # -----------------------------------------------------------------------------
 
+## Selects and executes a randomized attack set with weighted variety
 func _trigger_next_ship_attack() -> void:
+	if is_dead or is_executing_set:
+		return
+
+	var available_sets: Array[AttackSet] = []
+	if is_enraged:
+		available_sets = [
+			AttackSet.SET_1_HEAVY_ASSAULT,
+			AttackSet.SET_1_HEAVY_ASSAULT, # Weighted towards signature combo
+			AttackSet.SET_3_CQC_AMBUSH,
+			AttackSet.SET_4_ARMADA_OBLITERATION
+		]
+	else:
+		available_sets = [
+			AttackSet.SET_1_HEAVY_ASSAULT,
+			AttackSet.SET_1_HEAVY_ASSAULT, # Signature combo heavily featured
+			AttackSet.SET_2_PINCER_FLANK,
+			AttackSet.SET_3_CQC_AMBUSH
+		]
+
+	# Prevent repetitive immediate back-to-back rolls when possible
+	var candidate_pool: Array[AttackSet] = available_sets
+	if available_sets.size() > 1:
+		var distinct: Array[AttackSet] = []
+		for s in available_sets:
+			if s != last_attack_set:
+				distinct.append(s)
+		if not distinct.is_empty():
+			candidate_pool = distinct
+
+	var chosen: AttackSet = candidate_pool[randi() % candidate_pool.size()]
+	last_attack_set = chosen
+	current_attack_set = chosen
+	_execute_attack_set(chosen)
+
+
+## Executes the designated attack set
+func _execute_attack_set(set_type: AttackSet) -> void:
 	if is_dead:
 		return
 
-	match next_attack:
-		AttackPattern.TWIN_HORN_PINCER:
-			next_attack = AttackPattern.BROADSIDE_CASCADE
-			_launch_twin_horn_pincer()
-		AttackPattern.BROADSIDE_CASCADE:
-			next_attack = AttackPattern.THRUSTER_SURGE
-			_launch_broadside_cascade()
-		AttackPattern.THRUSTER_SURGE:
-			next_attack = AttackPattern.RAILGUN_STREAM
-			_launch_thruster_surge()
-		AttackPattern.RAILGUN_STREAM:
-			next_attack = AttackPattern.PHANTOM_LASER
-			_launch_railgun_stream()
-		AttackPattern.PHANTOM_LASER:
-			if is_enraged:
-				next_attack = AttackPattern.ARMADA_BOMBARDMENT
-			else:
-				next_attack = AttackPattern.TWIN_HORN_PINCER
-			_launch_phantom_laser()
-		AttackPattern.ARMADA_BOMBARDMENT:
-			next_attack = AttackPattern.TWIN_HORN_PINCER
-			_launch_armada_bombardment()
+	is_executing_set = true
+	is_attacking = true
 
+	match set_type:
+		AttackSet.SET_1_HEAVY_ASSAULT:
+			await _execute_attack_set_1()
+		AttackSet.SET_2_PINCER_FLANK:
+			await _execute_attack_set_2()
+		AttackSet.SET_3_CQC_AMBUSH:
+			await _execute_attack_set_3()
+		AttackSet.SET_4_ARMADA_OBLITERATION:
+			await _execute_attack_set_4()
+
+	is_executing_set = false
+	is_attacking = false
+
+
+## Attack Set 1 (Flagship Combo):
+## 1. Phantom Solar Laser Ray (Forces player to relocate vertically)
+## 2. Phantom Railgun Stream (Tracking high-velocity projectile stream)
+## 3. Extended Thruster Surge (Dashes directly into close-quarters with player)
+func _execute_attack_set_1() -> void:
+	if is_dead or not is_inside_tree():
+		return
+
+	# Step 1: Laser Beam
+	await _launch_phantom_laser()
+	if is_dead or not is_inside_tree():
+		return
+
+	# Tactical inter-attack pause
+	await get_tree().create_timer(0.35).timeout
+	if is_dead or not is_inside_tree():
+		return
+
+	# Step 2: Stream of Projectiles
+	await _launch_railgun_stream()
+	if is_dead or not is_inside_tree():
+		return
+
+	await get_tree().create_timer(0.30).timeout
+	if is_dead or not is_inside_tree():
+		return
+
+	# Step 3: Extended Thruster Surge Dash to player location
+	await _launch_thruster_surge()
+
+
+## Attack Set 2 (Naval Flank & Pincer Trap Combo):
+## 1. Broadside Artillery Cascade (Rhythmic vertical screen barrage)
+## 2. Twin Horn Pincer Battery (Converging pincer trap)
+func _execute_attack_set_2() -> void:
+	if is_dead or not is_inside_tree():
+		return
+
+	await _launch_broadside_cascade()
+	if is_dead or not is_inside_tree():
+		return
+
+	await get_tree().create_timer(0.25).timeout
+	if is_dead or not is_inside_tree():
+		return
+
+	await _launch_twin_horn_pincer()
+
+
+## Attack Set 3 (Close-Quarters Ambush Combo):
+## 1. Extended Thruster Surge Dash forward into player face
+## 2. Point-blank horn salvo and bow blast at apex
+## 3. Railgun stream as boss returns to station
+func _execute_attack_set_3() -> void:
+	if is_dead or not is_inside_tree():
+		return
+
+	await _launch_thruster_surge()
+	if is_dead or not is_inside_tree():
+		return
+
+	await get_tree().create_timer(0.25).timeout
+	if is_dead or not is_inside_tree():
+		return
+
+	await _launch_twin_horn_pincer()
+
+
+## Attack Set 4 (Armada Obliteration - Enraged Phase Climax):
+## 1. Solar Laser Ray
+## 2. Synchronized Armada Bombardment (Horn pincers + all 4 flank ports)
+## 3. Extended Thruster Surge Dash
+func _execute_attack_set_4() -> void:
+	if is_dead or not is_inside_tree():
+		return
+
+	await _launch_phantom_laser()
+	if is_dead or not is_inside_tree():
+		return
+
+	await get_tree().create_timer(0.35).timeout
+	if is_dead or not is_inside_tree():
+		return
+
+	await _launch_armada_bombardment()
+	if is_dead or not is_inside_tree():
+		return
+
+	await get_tree().create_timer(0.30).timeout
+	if is_dead or not is_inside_tree():
+		return
+
+	await _launch_thruster_surge()
+
+
+# -----------------------------------------------------------------------------
+# ATOMIC ATTACK PATTERNS (Directly Callable & Reusable)
+# -----------------------------------------------------------------------------
 
 ## Attack 1: Twin Horn Prow Battery (Meriam Kembar Minangkabau)
 ## Dual upper and lower horn turrets fire converging plasma salvos (pincer trap)
@@ -368,9 +525,9 @@ func _launch_broadside_cascade() -> void:
 	is_attacking = false
 
 
-## Attack 3: Thruster Surge & Ramming Reposition (Lajakan Haluan)
-## Cosmic warship ignites its sub-light plasma thrusters, surging forward to compress player airspace,
-## unleashes a point-blank dual horn salvo, then reverses smoothly back to firing distance.
+## Attack 3: Extended Thruster Surge & Ramming Reposition (Lajakan Haluan)
+## Cosmic warship ignites its sub-light plasma thrusters, surging deep into player airspace
+## right up to the player's position, unleashes point-blank salvos, then reverses back to station.
 func _launch_thruster_surge() -> void:
 	if is_dead:
 		return
@@ -378,13 +535,30 @@ func _launch_thruster_surge() -> void:
 	is_surging = true
 
 	var start_pos: Vector2 = position
-	surge_target_x = clampf(start_pos.x - 650.0, 680.0, 960.0)
 
-	# 1. Engine flare & Charge Telegraph Phase (visual danger corridor warning)
+	# Fetch live player position
+	var arena: Node = get_parent()
+	var player_node: Node2D = arena.get_node_or_null("Player") as Node2D if arena else null
+	var player_pos: Vector2 = Vector2(250.0, 540.0)
+	if player_node and is_instance_valid(player_node) and player_node.visible:
+		player_pos = player_node.global_position
+
+	# Extended Dash: Sweeps across the entire screen all the way to the leftmost boundary!
+	# The ship's bow reaches past the screen left edge, ensuring no player can hide on the left
+	surge_target_x = dash_target_x
+
+	# Y-Alignment: Telegraph aligns with player's vertical corridor to threaten player's lane
+	var charge_y: float = clampf(player_pos.y, 200.0, 880.0)
+
+	# 1. Engine flare & Charge Telegraph Phase (visual danger corridor warning across the whole screen)
 	is_telegraphing_surge = true
 	queue_redraw()
 	_flash_dragon_maw(0.55)
 	SoundManager.play_sfx("cannon_shoot", 0.65)
+
+	# Smoothly align Y position toward player lane during telegraph (0.45s)
+	var align_tween: Tween = create_tween()
+	align_tween.tween_property(self, "position:y", charge_y, 0.45).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 	if is_inside_tree() and not is_dead:
 		await get_tree().create_timer(0.55).timeout
@@ -396,19 +570,19 @@ func _launch_thruster_surge() -> void:
 		is_attacking = false
 		return
 
-	# 2. Smooth Thruster Surge Execution via chained tween
+	# 2. Smooth Thruster Surge Execution: hypersonically surges to leftmost area, then reverses
 	if _surge_tween and _surge_tween.is_valid():
 		_surge_tween.kill()
 
 	_surge_tween = create_tween()
-	# Step A: Sub-light forward acceleration
+	# Step A: Sub-light forward acceleration to leftmost screen area
 	_surge_tween.tween_callback(func():
 		if not is_dead:
 			SoundManager.play_sfx("cannon_shoot", 1.1)
 	)
-	_surge_tween.tween_property(self, "position:x", surge_target_x, 0.78).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	_surge_tween.tween_property(self, "position:x", surge_target_x, dash_speed_duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 
-	# Step B: Point-blank salvo at apex
+	# Step B: Point-blank salvo at apex (leftmost screen area)
 	_surge_tween.tween_callback(func():
 		if not is_dead and is_surging:
 			SoundManager.play_sfx("cannon_shoot")
@@ -420,10 +594,10 @@ func _launch_thruster_surge() -> void:
 				var bow_pos: Vector2 = _get_bow_muzzle()
 				_spawn_dragon_projectile(bow_pos, _get_aim_direction(bow_pos, 0.0), 580.0, 3, 24, COLOR_FLAME_ENRAGED, Vector2(0.38, 0.38))
 	)
-	_surge_tween.tween_interval(0.18)
+	_surge_tween.tween_interval(0.20)
 
 	# Step C: Smooth reverse repositioning back to station
-	_surge_tween.tween_property(self, "position:x", start_pos.x, 1.05).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	_surge_tween.tween_property(self, "position:x", start_pos.x, 1.15).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
 	# Step D: Conclude surge
 	_surge_tween.tween_callback(func():
@@ -432,15 +606,17 @@ func _launch_thruster_surge() -> void:
 	)
 
 	# Safety watchdog timer: guarantees state resets even under unexpected interruptions
-	var watchdog: SceneTreeTimer = get_tree().create_timer(3.2)
+	var watchdog: SceneTreeTimer = get_tree().create_timer(3.5)
 	watchdog.timeout.connect(func():
 		if is_surging:
 			is_surging = false
 			is_attacking = false
 	)
 
+	await _surge_tween.finished
 
-## Attack 5: Phantom Railgun Stream (Bedil Laksamana)
+
+## Attack 4: Phantom Railgun Stream (Bedil Laksamana)
 ## High-velocity rapid fire from center bow with live vertical tracking
 func _launch_railgun_stream() -> void:
 	is_attacking = true
@@ -479,9 +655,8 @@ func _launch_railgun_stream() -> void:
 	is_attacking = false
 
 
-## Attack 6: Phantom Solar Laser Ray (Pancaran Meriam Surya)
+## Attack 5: Phantom Solar Laser Ray (Pancaran Meriam Surya)
 ## Fires an unstoppable, continuous high-energy laser beam from the ship's bow across the screen.
-## Mirrors the multi-layered visual fidelity of the player's Quasar Laser (scaled smaller for balance).
 ## Cannot be counter-shot or intercepted by player weapons.
 func _launch_phantom_laser() -> void:
 	is_attacking = true
@@ -521,7 +696,7 @@ func _launch_phantom_laser() -> void:
 	is_attacking = false
 
 
-## Attack 7: Armada Bombardment (Amukan Kapal Perang) - Enraged Climax
+## Attack 6: Armada Bombardment (Amukan Kapal Perang) - Enraged Climax
 ## Coordinated full-ship assault: simultaneous horn crossfire + deck artillery
 func _launch_armada_bombardment() -> void:
 	is_attacking = true
@@ -598,6 +773,7 @@ func _trigger_arrival_crash() -> void:
 	is_dead = true
 	is_attacking = false
 	is_surging = false
+	is_executing_set = false
 	if _surge_tween and _surge_tween.is_valid():
 		_surge_tween.kill()
 	set_physics_process(false)
@@ -617,6 +793,7 @@ func die() -> void:
 	is_dead = true
 	is_attacking = false
 	is_surging = false
+	is_executing_set = false
 	if _surge_tween and _surge_tween.is_valid():
 		_surge_tween.kill()
 	is_telegraphing_surge = false
@@ -637,12 +814,14 @@ func die() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body is CharacterBody2D:
 		if is_surging:
-			# During sub-light thruster surge, deal collision ram damage to player without triggering arrival crash
-			if _ram_damage_cooldown <= 0.0:
-				_ram_damage_cooldown = 0.5
-				if body.has_method("take_damage"):
-					body.take_damage(35)
-				SoundManager.play_sfx("boss_explode", 1.4)
+			# Lethal Thruster Surge Dash: Instantly destroys player even with shields!
+			SoundManager.play_sfx("boss_explode", 1.6)
+			if body.has_method("lethal_hit"):
+				body.lethal_hit()
+			elif body.has_method("take_damage"):
+				body.take_damage(999999, true)
+			elif body.has_method("die"):
+				body.die()
 			return
 		if body.has_method("take_damage"):
 			body.take_damage(100)
@@ -657,34 +836,36 @@ func _draw() -> void:
 	if not is_telegraphing_surge:
 		return
 
-	# Draw horizontal naval dreadnought charge corridor to surge_target_x
+	# Draw horizontal naval dreadnought charge corridor all the way to the leftmost of the screen
 	var local_bow: Vector2 = to_local(_get_bow_muzzle())
-	var local_apex_x: float = to_local(Vector2(surge_target_x, global_position.y)).x
+	var screen_left_x: float = dash_target_x if dash_warning_to_screen_edge else surge_target_x
+	var local_left_x: float = to_local(Vector2(screen_left_x, global_position.y)).x
 
 	var time_ms: float = float(Time.get_ticks_msec())
 	var pulse: float = 0.40 + sin(time_ms * 0.025) * 0.25
 	var alert_color: Color = Color(1.0, 0.20, 0.25, pulse) if is_enraged else Color(1.0, 0.55, 0.15, pulse)
 	var lane_fill_color: Color = Color(alert_color.r, alert_color.g, alert_color.b, pulse * 0.18)
 
-	var half_h: float = 38.0
-	var min_x: float = minf(local_bow.x, local_apex_x)
-	var width_x: float = absf(local_bow.x - local_apex_x)
+	var half_h: float = dash_warning_corridor_half_height
+	var min_x: float = minf(local_bow.x, local_left_x)
+	var max_x: float = maxf(local_bow.x, local_left_x)
+	var width_x: float = max_x - min_x
 
-	# 1. Translucent danger corridor fill
+	# 1. Translucent danger corridor fill across the whole screen to the leftmost edge
 	draw_rect(Rect2(Vector2(min_x, -half_h), Vector2(width_x, half_h * 2.0)), lane_fill_color)
 
-	# 2. Upper and lower boundary warning lines
-	draw_line(Vector2(local_bow.x, -half_h), Vector2(local_apex_x, -half_h), alert_color, 2.2)
-	draw_line(Vector2(local_bow.x, half_h), Vector2(local_apex_x, half_h), alert_color, 2.2)
+	# 2. Upper and lower boundary warning lines across to the leftmost edge
+	draw_line(Vector2(max_x, -half_h), Vector2(min_x, -half_h), alert_color, 2.4)
+	draw_line(Vector2(max_x, half_h), Vector2(min_x, half_h), alert_color, 2.4)
 
-	# 3. Target stopping line & vertical bracket at apex
-	draw_line(Vector2(local_apex_x, -half_h - 10.0), Vector2(local_apex_x, half_h + 10.0), alert_color, 3.0)
+	# 3. Target stopping line & vertical bracket at the leftmost edge
+	draw_line(Vector2(min_x, -half_h - 12.0), Vector2(min_x, half_h + 12.0), alert_color, 3.2)
 
-	# 4. Animated chevrons pointing LEFT towards the player
+	# 4. Animated chevrons pointing LEFT across the entire screen
 	var step: float = 35.0
 	var offset: float = fmod(time_ms * 0.08, step)
-	var curr_x: float = local_bow.x - offset
-	while curr_x > local_apex_x + 10.0:
+	var curr_x: float = max_x - offset
+	while curr_x > min_x + 10.0:
 		var tip: Vector2 = Vector2(curr_x, 0.0)
 		var top_wing: Vector2 = Vector2(curr_x + 12.0, -18.0)
 		var bot_wing: Vector2 = Vector2(curr_x + 12.0, 18.0)

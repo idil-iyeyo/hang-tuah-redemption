@@ -868,32 +868,32 @@ func _run_tests() -> void:
 	# =========================================================================
 	print("\n--- Step 17: Verifying Universal Boss Minion Summoning Architecture ---")
 
-	# 1. Test Dreadnought Titan minion summoning capability
-	var dread_scene = load("res://scenes/bosses/boss.tscn") as PackedScene
+	# 1. Test Waurior minion summoning capability
+	var dread_scene = load("res://scenes/bosses/boss_waurior.tscn") as PackedScene
 	if not dread_scene:
-		printerr("[FAIL] Could not load boss.tscn")
+		printerr("[FAIL] Could not load boss_waurior.tscn")
 		quit(1)
 		return
 	var dread_inst = dread_scene.instantiate()
 	if not dread_inst.has_signal("minion_spawn_requested"):
-		printerr("[FAIL] Dreadnought Titan missing minion_spawn_requested signal")
+		printerr("[FAIL] Waurior missing minion_spawn_requested signal")
 		quit(1)
 		return
 	if not "minion_summon" in dread_inst:
-		printerr("[FAIL] Dreadnought Titan missing minion_summon property")
+		printerr("[FAIL] Waurior missing minion_summon property")
 		quit(1)
 		return
 	dread_inst.setup_boss(100, 540.0, 1.0, true)
 	if dread_inst.minion_summon != true:
-		printerr("[FAIL] Dreadnought Titan setup_boss did not set minion_summon to true")
+		printerr("[FAIL] Waurior setup_boss did not set minion_summon to true")
 		quit(1)
 		return
 	dread_inst.queue_free()
 
-	# 2. Test Dragon Roach Titan minion summoning capability
-	var roach_scene = load("res://scenes/bosses/dragon_roach.tscn") as PackedScene
+	# 2. Test Minangkabau Ship minion summoning capability
+	var roach_scene = load("res://scenes/bosses/boss_ship.tscn") as PackedScene
 	if not roach_scene:
-		printerr("[FAIL] Could not load dragon_roach.tscn")
+		printerr("[FAIL] Could not load boss_ship.tscn")
 		quit(1)
 		return
 	var roach_inst = roach_scene.instantiate()
@@ -1798,10 +1798,10 @@ func _run_tests() -> void:
 	# -------------------------------------------------------------
 	print("\n--- STEP 28: VERIFYING ADVANCED BOSS ATTACK CAPABILITIES ---")
 
-	# 1. Waurior (boss.tscn) Attack Architecture
-	var wau_boss_scene = load("res://scenes/bosses/boss.tscn") as PackedScene
+	# 1. Waurior (boss_waurior.tscn) Attack Architecture
+	var wau_boss_scene = load("res://scenes/bosses/boss_waurior.tscn") as PackedScene
 	if not wau_boss_scene:
-		printerr("[FAIL] Could not load res://scenes/bosses/boss.tscn")
+		printerr("[FAIL] Could not load res://scenes/bosses/boss_waurior.tscn")
 		quit(1)
 		return
 	var wau_inst = wau_boss_scene.instantiate()
@@ -1868,10 +1868,10 @@ func _run_tests() -> void:
 		return
 	wau_inst.queue_free()
 
-	# 2. Minangkabau Ship (dragon_roach.tscn) Attack Architecture
-	var ship_scene = load("res://scenes/bosses/dragon_roach.tscn") as PackedScene
+	# 2. Minangkabau Ship (boss_ship.tscn) Attack Architecture
+	var ship_scene = load("res://scenes/bosses/boss_ship.tscn") as PackedScene
 	if not ship_scene:
-		printerr("[FAIL] Could not load res://scenes/bosses/dragon_roach.tscn")
+		printerr("[FAIL] Could not load res://scenes/bosses/boss_ship.tscn")
 		quit(1)
 		return
 	var ship_inst = ship_scene.instantiate()
@@ -1976,6 +1976,151 @@ func _run_tests() -> void:
 	ship_inst.queue_free()
 
 	print("[PASS] Advanced Boss Attacks for Waurior & Minangkabau Ship verified.")
+
+	# -------------------------------------------------------------
+	# STEP 29: VERIFYING RENAMED BOSS SCENES & RANDOMIZED ATTACK SET COMBOS
+	# -------------------------------------------------------------
+	print("\n--- STEP 29: VERIFYING RENAMED BOSS SCENES & ATTACK SET COMBOS ---")
+
+	# 1. Primary Waurior scene (boss_waurior.tscn)
+	var wau_renamed_scene = load("res://scenes/bosses/boss_waurior.tscn") as PackedScene
+	if not wau_renamed_scene:
+		printerr("[FAIL] Could not load res://scenes/bosses/boss_waurior.tscn")
+		quit(1)
+		return
+	var wau_renamed_inst = wau_renamed_scene.instantiate()
+	main.add_child(wau_renamed_inst)
+	wau_renamed_inst.setup_boss(200, 540.0, 1.0, false)
+
+	if not ("is_executing_set" in wau_renamed_inst) or not ("current_attack_set" in wau_renamed_inst):
+		printerr("[FAIL] Waurior missing attack set state variables")
+		quit(1)
+		return
+	if not wau_renamed_inst.has_method("_execute_attack_set"):
+		printerr("[FAIL] Waurior missing _execute_attack_set method")
+		quit(1)
+		return
+	if not wau_renamed_inst.has_method("_execute_attack_set_1"):
+		printerr("[FAIL] Waurior missing _execute_attack_set_1 method")
+		quit(1)
+		return
+	wau_renamed_inst.queue_free()
+
+	# 2. Primary Minangkabau Ship scene (boss_ship.tscn)
+	var ship_renamed_scene = load("res://scenes/bosses/boss_ship.tscn") as PackedScene
+	if not ship_renamed_scene:
+		printerr("[FAIL] Could not load res://scenes/bosses/boss_ship.tscn")
+		quit(1)
+		return
+	var ship_renamed_inst = ship_renamed_scene.instantiate()
+	main.add_child(ship_renamed_inst)
+	ship_renamed_inst.setup_boss(300, 540.0, 1.0, true)
+
+	if not ("is_executing_set" in ship_renamed_inst) or not ("current_attack_set" in ship_renamed_inst):
+		printerr("[FAIL] Minangkabau Ship missing attack set state variables")
+		quit(1)
+		return
+	if not ship_renamed_inst.has_method("_execute_attack_set"):
+		printerr("[FAIL] Minangkabau Ship missing _execute_attack_set method")
+		quit(1)
+		return
+	if not ship_renamed_inst.has_method("_execute_attack_set_1"):
+		printerr("[FAIL] Minangkabau Ship missing _execute_attack_set_1 method (Laser -> Stream -> Dash)")
+		quit(1)
+		return
+	if not ship_renamed_inst.has_method("_execute_attack_set_2"):
+		printerr("[FAIL] Minangkabau Ship missing _execute_attack_set_2 method")
+		quit(1)
+		return
+	if not ship_renamed_inst.has_method("_execute_attack_set_3"):
+		printerr("[FAIL] Minangkabau Ship missing _execute_attack_set_3 method")
+		quit(1)
+		return
+	if not ship_renamed_inst.has_method("_execute_attack_set_4"):
+		printerr("[FAIL] Minangkabau Ship missing _execute_attack_set_4 method")
+		quit(1)
+		return
+
+	# Verify full-screen dash target X and warning corridor configurations
+	if not ("dash_target_x" in ship_renamed_inst) or ship_renamed_inst.dash_target_x > 0.0:
+		printerr("[FAIL] Minangkabau Ship dash_target_x should target leftmost screen area (<= 0.0)")
+		quit(1)
+		return
+	if not ("dash_warning_to_screen_edge" in ship_renamed_inst) or not ship_renamed_inst.dash_warning_to_screen_edge:
+		printerr("[FAIL] Minangkabau Ship dash_warning_to_screen_edge should be enabled")
+		quit(1)
+		return
+	if not ship_renamed_inst.has_node("ProwCollisionShape2D"):
+		printerr("[FAIL] Minangkabau Ship missing ProwCollisionShape2D for full dash coverage")
+		quit(1)
+		return
+	ship_renamed_inst.queue_free()
+
+	print("[PASS] Renamed Boss Scenes (boss_waurior.tscn, boss_ship.tscn) & Attack Sets verified.")
+
+	# -------------------------------------------------------------
+	# STEP 30: VERIFYING DEADLY DASH ATTACK (INSTANT LOSS EVEN WITH SHIELD)
+	# -------------------------------------------------------------
+	print("\n--- STEP 30: VERIFYING DEADLY DASH ATTACK (INSTANT LOSS EVEN WITH SHIELD) ---")
+
+	var player_inst = main.get_node_or_null("Player")
+	if not player_inst:
+		printerr("[FAIL] Player instance missing in main scene for lethal dash test")
+		quit(1)
+		return
+
+	if not player_inst.has_method("lethal_hit"):
+		printerr("[FAIL] Player missing lethal_hit method")
+		quit(1)
+		return
+
+	# 1. Test player.lethal_hit() directly with shields active
+	player_inst.is_alive = true
+	player_inst.current_health = 100
+	player_inst.shield_level = 3
+	player_inst.current_shields = 6
+	player_inst.lethal_hit()
+
+	if player_inst.is_alive or player_inst.current_health != 0 or player_inst.current_shields != 0:
+		printerr("[FAIL] lethal_hit did not immediately wipe player health and shields to 0")
+		quit(1)
+		return
+
+	# 2. Test Minangkabau Ship lethal dash collision
+	player_inst.is_alive = true
+	player_inst.current_health = 100
+	player_inst.shield_level = 2
+	player_inst.current_shields = 4
+
+	var test_ship = ship_renamed_scene.instantiate()
+	main.add_child(test_ship)
+	test_ship.is_surging = true
+	test_ship._on_body_entered(player_inst)
+
+	if player_inst.is_alive or player_inst.current_health != 0 or player_inst.current_shields != 0:
+		printerr("[FAIL] Minangkabau Ship surging dash collision did not instantly destroy shielded player")
+		quit(1)
+		return
+	test_ship.queue_free()
+
+	# 3. Test Waurior lethal dive collision
+	player_inst.is_alive = true
+	player_inst.current_health = 100
+	player_inst.shield_level = 2
+	player_inst.current_shields = 4
+
+	var test_wau = wau_renamed_scene.instantiate()
+	main.add_child(test_wau)
+	test_wau.is_swooping = true
+	test_wau._on_body_entered(player_inst)
+
+	if player_inst.is_alive or player_inst.current_health != 0 or player_inst.current_shields != 0:
+		printerr("[FAIL] Waurior swooping dive collision did not instantly destroy shielded player")
+		quit(1)
+		return
+	test_wau.queue_free()
+
+	print("[PASS] Deadly Dash Attacks verified: instant loss triggered even through kinetic shields.")
 
 	print("\n*** ALL GODOT RUNTIME ENGINE TESTS PASSED WITH 0 ERRORS! ***")
 	quit(0)

@@ -1,11 +1,19 @@
 extends Area2D
 
 ## Waurior (Wau Monarch) - Ancient Autonomous War-Kite Titan Boss Entity
-## Features aerodynamic, wind-shearing attack patterns & dynamic flight mobility:
+## Features aerodynamic, wind-shearing attack sets & dynamic flight mobility:
+##
+## ATTACK SET ARCHITECTURE:
+## - SET 1 (Aero Vanguard Assault): Bulan Crescent Arc -> Slicing Dart Barrage -> Extended Aero-Swoop Dive
+## - SET 2 (Wind-Shear Cross Sweep): Wind-Shear Cross Gusts -> Bulan Crescent Arc
+## - SET 3 (CQC Sky Dive Ambush): Extended Aero-Swoop Dive -> Center Slicing Darts
+## - SET 4 (Gale Cataclysm - Enraged): Gale Storm -> Slicing Dart Barrage -> Extended Aero-Swoop Dive
+##
+## ATOMIC WEAPONRY:
 ## 1. Bulan Crescent Arc (expanding crescent volley with central piercing dart)
 ## 2. Wind-Shear Cross Gusts (alternating wingtip criss-crossing wind lines)
 ## 3. Slicing Dart Barrage (rapid aerodynamic high-velocity needle bursts)
-## 4. High-G Aero-Swoop (parabolic dive-bomb through player flight corridor)
+## 4. High-G Aero-Swoop (parabolic dive-bomb deep through player flight corridor)
 ## 5. Gale Storm (enraged climax: wide crescent wave + dual-wing converging wake)
 
 const SoundManager = preload("res://scripts/sound_manager.gd")
@@ -21,6 +29,13 @@ enum AttackPattern {
 	DART_BARRAGE,
 	AERO_SWOOP,
 	GALE_STORM
+}
+
+enum AttackSet {
+	SET_1_AERO_ASSAULT,     # Crescent Arc -> Dart Barrage -> Extended Aero-Swoop Dive
+	SET_2_CROSS_SHEAR,      # Wind-Shear Cross Gusts -> Crescent Arc
+	SET_3_CQC_DIVE,         # Extended Aero-Swoop Dive -> Center Dart Barrage
+	SET_4_GALE_CATACLYSM    # Enraged: Gale Storm -> Dart Barrage -> Extended Aero-Swoop Dive
 }
 
 # --- Attack Cadence & Balance Tuning Constants ---
@@ -52,6 +67,11 @@ var is_attacking: bool = false
 var is_swooping: bool = false
 var next_attack: AttackPattern = AttackPattern.CRESCENT_ARC
 
+# Attack Set Combo State
+var is_executing_set: bool = false
+var current_attack_set: AttackSet = AttackSet.SET_1_AERO_ASSAULT
+var last_attack_set: int = -1
+
 # Telegraph & Swoop State
 var is_telegraphing_swoop: bool = false
 var swoop_target_apex: Vector2 = Vector2.ZERO
@@ -67,6 +87,7 @@ var target_center_y: float = 540.0
 func _ready() -> void:
 	add_to_group("boss")
 	add_to_group("enemy_units")
+	add_to_group("boss_waurior")
 	body_entered.connect(_on_body_entered)
 
 	if not projectile_scene:
@@ -131,7 +152,7 @@ func _physics_process(delta: float) -> void:
 			return
 
 	# Attack pattern cadence
-	if not is_attacking:
+	if not is_attacking and not is_executing_set:
 		attack_timer -= delta
 		if attack_timer <= 0.0:
 			attack_timer = COOLDOWN_ENRAGED if is_enraged else COOLDOWN_NORMAL
@@ -236,39 +257,165 @@ func _spawn_boss_bullet(
 
 
 # -----------------------------------------------------------------------------
-# ATTACK PATTERNS & STATE MACHINE
+# RANDOMIZED ATTACK SET SYSTEM
 # -----------------------------------------------------------------------------
 
-## Rotates through Waurior's aerodynamic attack arsenal
+## Selects and executes a randomized aerodynamic attack set
 func _trigger_next_attack() -> void:
-	if is_dead:
+	if is_dead or is_executing_set:
 		return
 
-	match next_attack:
-		AttackPattern.CRESCENT_ARC:
-			next_attack = AttackPattern.CROSS_GUSTS
-			_execute_crescent_arc()
-		AttackPattern.CROSS_GUSTS:
-			next_attack = AttackPattern.DART_BARRAGE
-			_execute_cross_gusts()
-		AttackPattern.DART_BARRAGE:
-			next_attack = AttackPattern.AERO_SWOOP
-			_execute_dart_barrage()
-		AttackPattern.AERO_SWOOP:
-			if is_enraged:
-				next_attack = AttackPattern.GALE_STORM
-			else:
-				next_attack = AttackPattern.CRESCENT_ARC
-			_execute_aero_swoop()
-		AttackPattern.GALE_STORM:
-			next_attack = AttackPattern.CRESCENT_ARC
-			_execute_gale_storm()
+	var available_sets: Array[AttackSet] = []
+	if is_enraged:
+		available_sets = [
+			AttackSet.SET_1_AERO_ASSAULT,
+			AttackSet.SET_1_AERO_ASSAULT,
+			AttackSet.SET_3_CQC_DIVE,
+			AttackSet.SET_4_GALE_CATACLYSM
+		]
+	else:
+		available_sets = [
+			AttackSet.SET_1_AERO_ASSAULT,
+			AttackSet.SET_1_AERO_ASSAULT,
+			AttackSet.SET_2_CROSS_SHEAR,
+			AttackSet.SET_3_CQC_DIVE
+		]
+
+	var candidate_pool: Array[AttackSet] = available_sets
+	if available_sets.size() > 1:
+		var distinct: Array[AttackSet] = []
+		for s in available_sets:
+			if s != last_attack_set:
+				distinct.append(s)
+		if not distinct.is_empty():
+			candidate_pool = distinct
+
+	var chosen: AttackSet = candidate_pool[randi() % candidate_pool.size()]
+	last_attack_set = chosen
+	current_attack_set = chosen
+	_execute_attack_set(chosen)
 
 
 ## Backward-compatibility wrapper for external callers
 func _execute_boss_attack() -> void:
 	_trigger_next_attack()
 
+
+## Executes the designated aerodynamic attack set
+func _execute_attack_set(set_type: AttackSet) -> void:
+	if is_dead:
+		return
+
+	is_executing_set = true
+	is_attacking = true
+
+	match set_type:
+		AttackSet.SET_1_AERO_ASSAULT:
+			await _execute_attack_set_1()
+		AttackSet.SET_2_CROSS_SHEAR:
+			await _execute_attack_set_2()
+		AttackSet.SET_3_CQC_DIVE:
+			await _execute_attack_set_3()
+		AttackSet.SET_4_GALE_CATACLYSM:
+			await _execute_attack_set_4()
+
+	is_executing_set = false
+	is_attacking = false
+
+
+## Attack Set 1 (Aero Vanguard Assault):
+## 1. Bulan Crescent Arc
+## 2. Slicing Dart Barrage
+## 3. High-G Aero-Swoop Dive Bomb close to player
+func _execute_attack_set_1() -> void:
+	if is_dead or not is_inside_tree():
+		return
+
+	await _execute_crescent_arc()
+	if is_dead or not is_inside_tree():
+		return
+
+	await get_tree().create_timer(0.25).timeout
+	if is_dead or not is_inside_tree():
+		return
+
+	await _execute_dart_barrage()
+	if is_dead or not is_inside_tree():
+		return
+
+	await get_tree().create_timer(0.20).timeout
+	if is_dead or not is_inside_tree():
+		return
+
+	await _execute_aero_swoop()
+
+
+## Attack Set 2 (Wind-Shear Cross Sweep):
+## 1. Wind-Shear Cross Gusts
+## 2. Bulan Crescent Arc
+func _execute_attack_set_2() -> void:
+	if is_dead or not is_inside_tree():
+		return
+
+	await _execute_cross_gusts()
+	if is_dead or not is_inside_tree():
+		return
+
+	await get_tree().create_timer(0.25).timeout
+	if is_dead or not is_inside_tree():
+		return
+
+	await _execute_crescent_arc()
+
+
+## Attack Set 3 (Close-Quarters Dive Ambush):
+## 1. Aero-Swoop Dive close to player
+## 2. Point-blank Dart Barrage
+func _execute_attack_set_3() -> void:
+	if is_dead or not is_inside_tree():
+		return
+
+	await _execute_aero_swoop()
+	if is_dead or not is_inside_tree():
+		return
+
+	await get_tree().create_timer(0.25).timeout
+	if is_dead or not is_inside_tree():
+		return
+
+	await _execute_dart_barrage()
+
+
+## Attack Set 4 (Gale Cataclysm - Enraged Climax):
+## 1. Gale Storm Climax
+## 2. Rapid Needle Dart Barrage
+## 3. Extended Aero-Swoop Dive
+func _execute_attack_set_4() -> void:
+	if is_dead or not is_inside_tree():
+		return
+
+	await _execute_gale_storm()
+	if is_dead or not is_inside_tree():
+		return
+
+	await get_tree().create_timer(0.25).timeout
+	if is_dead or not is_inside_tree():
+		return
+
+	await _execute_dart_barrage()
+	if is_dead or not is_inside_tree():
+		return
+
+	await get_tree().create_timer(0.20).timeout
+	if is_dead or not is_inside_tree():
+		return
+
+	await _execute_aero_swoop()
+
+
+# -----------------------------------------------------------------------------
+# ATOMIC ATTACK PATTERNS (Directly Callable & Reusable)
+# -----------------------------------------------------------------------------
 
 ## Pattern 1: Bulan Crescent Arc (Kerambit Bulan)
 ## Expanding fan wave evoking the crescent wings of the Wau Bulan
@@ -388,9 +535,9 @@ func _execute_dart_barrage() -> void:
 	is_attacking = false
 
 
-## Pattern 4: High-G Aero-Swoop & Wind Dive (Junaman Badai)
+## Pattern 4: Extended High-G Aero-Swoop & Wind Dive (Junaman Badai)
 ## Waurior displays a flight trajectory telegraph warning line, then executes a smooth aerodynamic
-## dive-bomb through the player flight corridor, dropping trailing wind darts before sweeping back to station.
+## dive-bomb deep into the player flight corridor, dropping trailing wind darts before sweeping back to station.
 func _execute_aero_swoop() -> void:
 	if is_dead:
 		return
@@ -400,10 +547,12 @@ func _execute_aero_swoop() -> void:
 	var start_pos: Vector2 = position
 	var arena: Node = get_parent()
 	var player_node: Node2D = arena.get_node_or_null("Player") as Node2D if arena else null
-	var target_y: float = player_node.global_position.y if (player_node and is_instance_valid(player_node)) else target_center_y
+	var player_pos: Vector2 = Vector2(250.0, 540.0)
+	if player_node and is_instance_valid(player_node) and player_node.visible:
+		player_pos = player_node.global_position
 
-	# Calculate dive apex (kept safely inside airspace around 650px so front edge never crosses crash boundary)
-	var dive_apex: Vector2 = Vector2(clampf(start_pos.x - 520.0, 650.0, 920.0), clampf(target_y, 220.0, 860.0))
+	# Extended dive apex: reaches close to player location (within ~140px), safe minimum 360px
+	var dive_apex: Vector2 = Vector2(clampf(player_pos.x + 140.0, 360.0, 920.0), clampf(player_pos.y, 180.0, 900.0))
 	swoop_target_apex = dive_apex
 
 	# 1. Pre-charge Visual & Audio Telegraph Warning Phase
@@ -467,8 +616,10 @@ func _execute_aero_swoop() -> void:
 			is_attacking = false
 	)
 
+	await _swoop_tween.finished
 
-## Pattern 6: Gale Storm (Badai Monarch) - Enraged Climax
+
+## Pattern 5: Gale Storm (Badai Monarch) - Enraged Climax
 ## High-impact combo: broad crescent arc followed by dual-wing converging wake
 func _execute_gale_storm() -> void:
 	is_attacking = true
@@ -536,12 +687,12 @@ func _trigger_arrival_crash() -> void:
 	is_dead = true
 	is_attacking = false
 	is_swooping = false
+	is_executing_set = false
 	if _swoop_tween and _swoop_tween.is_valid():
 		_swoop_tween.kill()
 	set_physics_process(false)
 	boss_reached_player.emit()
 
-	# Crush the player
 	var main_node: Node = get_parent()
 	if main_node:
 		var player_node: Node = main_node.get_node_or_null("Player")
@@ -556,6 +707,7 @@ func die() -> void:
 	is_dead = true
 	is_attacking = false
 	is_swooping = false
+	is_executing_set = false
 	if _swoop_tween and _swoop_tween.is_valid():
 		_swoop_tween.kill()
 	is_telegraphing_swoop = false
@@ -577,12 +729,14 @@ func die() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body is CharacterBody2D:
 		if is_swooping:
-			# During aero-swoop dive, deal collision ram damage to player without triggering arrival crash
-			if _ram_damage_cooldown <= 0.0:
-				_ram_damage_cooldown = 0.5
-				if body.has_method("take_damage"):
-					body.take_damage(30)
-				SoundManager.play_sfx("boss_explode", 1.4)
+			# Lethal Aero-Swoop Dive: Instantly destroys player even with shields!
+			SoundManager.play_sfx("boss_explode", 1.6)
+			if body.has_method("lethal_hit"):
+				body.lethal_hit()
+			elif body.has_method("take_damage"):
+				body.take_damage(999999, true)
+			elif body.has_method("die"):
+				body.die()
 			return
 		if body.has_method("take_damage"):
 			body.take_damage(100)
