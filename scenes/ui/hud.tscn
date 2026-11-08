@@ -5,6 +5,10 @@
 [ext_resource type="Script" uid="uid://xlaamvntltgb" path="res://scenes/ui/mobile_fire_button.gd" id="3_fire_script"]
 [ext_resource type="Texture2D" uid="uid://c2pi2wsma0ku" path="res://assets/textures/game_logo.png" id="4_game_logo"]
 [ext_resource type="PackedScene" uid="uid://buwq48kdxxyos" path="res://scenes/ui/comic_slides.tscn" id="5_comic_slides"]
+[ext_resource type="Texture2D" uid="uid://qntdgpe5eo13" path="res://assets/textures/ships/HangTuahJet_1.png" id="6_skin_tuah"]
+[ext_resource type="Texture2D" uid="uid://1ony3vo5kpft" path="res://assets/textures/ships/HangJebatJetNoExhaust.png" id="7_skin_jebat"]
+[ext_resource type="Texture2D" uid="uid://3n6arhnead8b" path="res://assets/textures/ships/Hang Lekir Jet - Player.png" id="8_skin_lekir"]
+[ext_resource type="Texture2D" uid="uid://dwkqcmekbds58" path="res://assets/textures/ships/Hang Kasturi Jet - Player Right.png" id="9_skin_kasturi"]
 
 [node name="HUD" type="CanvasLayer" unique_id=15779442]
 process_mode = 3
@@ -133,38 +137,55 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -550.0
-offset_top = -340.0
-offset_right = 550.0
-offset_bottom = 340.0
+offset_left = -640.0
+offset_top = -375.0
+offset_right = 640.0
+offset_bottom = 375.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Margin" type="MarginContainer" parent="ShopContainer" unique_id=904494389]
 layout_mode = 2
-theme_override_constants/margin_left = 40
-theme_override_constants/margin_top = 28
-theme_override_constants/margin_right = 40
-theme_override_constants/margin_bottom = 28
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 20
 
 [node name="ShopVBox" type="VBoxContainer" parent="ShopContainer/Margin" unique_id=28133565]
 layout_mode = 2
-theme_override_constants/separation = 16
+theme_override_constants/separation = 12
 alignment = 1
 
 [node name="ShopHeader" type="Label" parent="ShopContainer/Margin/ShopVBox" unique_id=798515421]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
-theme_override_font_sizes/font_size = 40
-text = "UPGRADE BAY"
+theme_override_font_sizes/font_size = 36
+text = "FLEET HANGAR & UPGRADE BAY"
 horizontal_alignment = 1
 
 [node name="ShopPoints" type="Label" parent="ShopContainer/Margin/ShopVBox" unique_id=1596523117]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.3, 0.9, 1, 1)
-theme_override_font_sizes/font_size = 26
+theme_override_font_sizes/font_size = 24
 text = "💎 Upgrade Points: 1"
 horizontal_alignment = 1
+
+[node name="ShopTabBar" type="HBoxContainer" parent="ShopContainer/Margin/ShopVBox" unique_id=1596523120]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="ShopUpgradesTabButton" type="Button" parent="ShopContainer/Margin/ShopVBox/ShopTabBar" unique_id=1596523121]
+custom_minimum_size = Vector2(260, 44)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "⚡ SHIP UPGRADES"
+
+[node name="ShopSkinsTabButton" type="Button" parent="ShopContainer/Margin/ShopVBox/ShopTabBar" unique_id=1596523122]
+custom_minimum_size = Vector2(260, 44)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "🚀 FLEET SKINS"
 
 [node name="HSeparator" type="HSeparator" parent="ShopContainer/Margin/ShopVBox" unique_id=1245477570]
 layout_mode = 2
@@ -241,11 +262,245 @@ theme_override_font_sizes/font_size = 18
 text = "All spent upgrade points refunded!"
 horizontal_alignment = 1
 
+[node name="SkinsView" type="VBoxContainer" parent="ShopContainer/Margin/ShopVBox" unique_id=770000020]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="SkinsSubtitle" type="Label" parent="ShopContainer/Margin/ShopVBox/SkinsView" unique_id=770000022]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 17
+text = "🌙 Hang Tuah Jet: Sang Laksamana — 'Tak Melayu Hilang di Angkasa'"
+horizontal_alignment = 1
+
+[node name="SkinsCenter" type="CenterContainer" parent="ShopContainer/Margin/ShopVBox/SkinsView" unique_id=770000023]
+layout_mode = 2
+
+[node name="SkinsGrid" type="GridContainer" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter" unique_id=770000024]
+layout_mode = 2
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 12
+columns = 2
+
+[node name="SkinDefaultCard" type="PanelContainer" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid" unique_id=770000130]
+custom_minimum_size = Vector2(560, 136)
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinDefaultCard" unique_id=770000131]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="HBox" type="HBoxContainer" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinDefaultCard/Margin" unique_id=770000132]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="SkinDefaultPreview" type="TextureRect" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinDefaultCard/Margin/HBox" unique_id=770000133]
+custom_minimum_size = Vector2(180, 100)
+layout_mode = 2
+texture = ExtResource("6_skin_tuah")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBox" type="VBoxContainer" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinDefaultCard/Margin/HBox" unique_id=770000134]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+alignment = 1
+
+[node name="SkinDefaultTitle" type="Label" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinDefaultCard/Margin/HBox/VBox" unique_id=770000135]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.95, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "Hang Tuah Jet"
+
+[node name="SkinDefaultEpithet" type="Label" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinDefaultCard/Margin/HBox/VBox" unique_id=770000136]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.85, 0.95, 1)
+theme_override_font_sizes/font_size = 14
+text = "Sang Laksamana"
+
+[node name="SkinDefaultMotto" type="Label" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinDefaultCard/Margin/HBox/VBox" unique_id=770000137]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.65, 0.75, 1)
+theme_override_font_sizes/font_size = 12
+text = "\"Tak Melayu Hilang di Angkasa\""
+
+[node name="SkinDefaultButton" type="Button" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinDefaultCard/Margin/HBox/VBox" unique_id=770000025]
+custom_minimum_size = Vector2(160, 34)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "✓ EQUIPPED"
+
+[node name="SkinCrimsonCard" type="PanelContainer" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid" unique_id=770000140]
+custom_minimum_size = Vector2(560, 136)
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinCrimsonCard" unique_id=770000141]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="HBox" type="HBoxContainer" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinCrimsonCard/Margin" unique_id=770000142]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="SkinCrimsonPreview" type="TextureRect" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinCrimsonCard/Margin/HBox" unique_id=770000143]
+custom_minimum_size = Vector2(180, 100)
+layout_mode = 2
+texture = ExtResource("7_skin_jebat")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBox" type="VBoxContainer" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinCrimsonCard/Margin/HBox" unique_id=770000144]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+alignment = 1
+
+[node name="SkinCrimsonTitle" type="Label" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinCrimsonCard/Margin/HBox/VBox" unique_id=770000145]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.4, 0.4, 1)
+theme_override_font_sizes/font_size = 20
+text = "Hang Jebat Jet"
+
+[node name="SkinCrimsonEpithet" type="Label" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinCrimsonCard/Margin/HBox/VBox" unique_id=770000146]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.75, 0.75, 1)
+theme_override_font_sizes/font_size = 14
+text = "Sang Pemberontak"
+
+[node name="SkinCrimsonMotto" type="Label" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinCrimsonCard/Margin/HBox/VBox" unique_id=770000147]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.55, 0.55, 1)
+theme_override_font_sizes/font_size = 12
+text = "\"Raja Adil Disembah, Raja Zalim Disanggah\""
+
+[node name="SkinCrimsonButton" type="Button" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinCrimsonCard/Margin/HBox/VBox" unique_id=770000026]
+custom_minimum_size = Vector2(160, 34)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "EQUIP SHIP"
+
+[node name="SkinVoidCard" type="PanelContainer" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid" unique_id=770000150]
+custom_minimum_size = Vector2(560, 136)
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinVoidCard" unique_id=770000151]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="HBox" type="HBoxContainer" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinVoidCard/Margin" unique_id=770000152]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="SkinVoidPreview" type="TextureRect" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinVoidCard/Margin/HBox" unique_id=770000153]
+custom_minimum_size = Vector2(180, 100)
+layout_mode = 2
+texture = ExtResource("8_skin_lekir")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBox" type="VBoxContainer" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinVoidCard/Margin/HBox" unique_id=770000154]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+alignment = 1
+
+[node name="SkinVoidTitle" type="Label" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinVoidCard/Margin/HBox/VBox" unique_id=770000155]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.25, 1)
+theme_override_font_sizes/font_size = 20
+text = "Hang Lekir Jet"
+
+[node name="SkinVoidEpithet" type="Label" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinVoidCard/Margin/HBox/VBox" unique_id=770000156]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.75, 1)
+theme_override_font_sizes/font_size = 14
+text = "Sang Bayang"
+
+[node name="SkinVoidMotto" type="Label" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinVoidCard/Margin/HBox/VBox" unique_id=770000157]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.7, 0.55, 1)
+theme_override_font_sizes/font_size = 12
+text = "\"Gerak Kilat, Musuh Tersirat\""
+
+[node name="SkinVoidButton" type="Button" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinVoidCard/Margin/HBox/VBox" unique_id=770000027]
+custom_minimum_size = Vector2(160, 34)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "EQUIP SHIP"
+
+[node name="SkinGoldCard" type="PanelContainer" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid" unique_id=770000160]
+custom_minimum_size = Vector2(560, 136)
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinGoldCard" unique_id=770000161]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="HBox" type="HBoxContainer" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinGoldCard/Margin" unique_id=770000162]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="SkinGoldPreview" type="TextureRect" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinGoldCard/Margin/HBox" unique_id=770000163]
+custom_minimum_size = Vector2(180, 100)
+layout_mode = 2
+texture = ExtResource("9_skin_kasturi")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBox" type="VBoxContainer" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinGoldCard/Margin/HBox" unique_id=770000164]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+alignment = 1
+
+[node name="SkinGoldTitle" type="Label" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinGoldCard/Margin/HBox/VBox" unique_id=770000165]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.45, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "Hang Kasturi Jet"
+
+[node name="SkinGoldEpithet" type="Label" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinGoldCard/Margin/HBox/VBox" unique_id=770000166]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.75, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "Sang Kesatria"
+
+[node name="SkinGoldMotto" type="Label" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinGoldCard/Margin/HBox/VBox" unique_id=770000167]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.55, 0.8, 1)
+theme_override_font_sizes/font_size = 12
+text = "\"Biar Putih Tulang, Jangan Putih Mata\""
+
+[node name="SkinGoldButton" type="Button" parent="ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinGoldCard/Margin/HBox/VBox" unique_id=770000028]
+custom_minimum_size = Vector2(160, 34)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "EQUIP SHIP"
+
 [node name="ContinueButton" type="Button" parent="ShopContainer/Margin/ShopVBox" unique_id=247723449]
 custom_minimum_size = Vector2(460, 68)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 22
 text = "CONTINUE TO NEXT WAVE ➔"
 
 [node name="GameOverContainer" type="VBoxContainer" parent="." unique_id=232443747]
@@ -785,7 +1040,7 @@ theme_override_font_sizes/font_size = 20
 text = "◀ Exit to Main Menu"
 
 [node name="SpacerLeftBalance" type="Control" parent="SelectLevelContainer/TopBarMargin/TopBarHBox" unique_id=770000097]
-custom_minimum_size = Vector2(226, 0)
+custom_minimum_size = Vector2(0, 0)
 layout_mode = 2
 
 [node name="SpacerLeft" type="Control" parent="SelectLevelContainer/TopBarMargin/TopBarHBox" unique_id=770000005]
@@ -804,14 +1059,18 @@ theme_override_font_sizes/font_size = 20
 text = "★ MISSIONS"
 
 [node name="SkinsTabButton" type="Button" parent="SelectLevelContainer/TopBarMargin/TopBarHBox/TabBarHBox" unique_id=770000008]
-custom_minimum_size = Vector2(200, 52)
+custom_minimum_size = Vector2(340, 52)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "🚀 HANGAR / SKINS"
+text = "🚀 HANGAR & UPGRADES (0 PTS)"
 
 [node name="SpacerRight" type="Control" parent="SelectLevelContainer/TopBarMargin/TopBarHBox" unique_id=770000009]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="SpacerRightBalance" type="Control" parent="SelectLevelContainer/TopBarMargin/TopBarHBox" unique_id=770000098]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
 
 [node name="SelectLevelStoryButton" type="Button" parent="SelectLevelContainer/TopBarMargin/TopBarHBox" unique_id=770000096]
 custom_minimum_size = Vector2(180, 52)
@@ -819,13 +1078,6 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.35, 0.95, 1, 1)
 theme_override_font_sizes/font_size = 20
 text = "📜 STORY"
-
-[node name="SelectLevelUpgradeButton" type="Button" parent="SelectLevelContainer/TopBarMargin/TopBarHBox" unique_id=770000010]
-custom_minimum_size = Vector2(280, 52)
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.85, 0.25, 1)
-theme_override_font_sizes/font_size = 20
-text = "💎 UPGRADE BAY"
 
 [node name="ContentMargin" type="MarginContainer" parent="SelectLevelContainer" unique_id=770000011]
 layout_mode = 1
@@ -916,59 +1168,6 @@ theme_override_font_sizes/font_size = 24
 text = "PAGE 1 / 2"
 horizontal_alignment = 1
 
-[node name="SkinsView" type="VBoxContainer" parent="SelectLevelContainer/ContentMargin" unique_id=770000020]
-visible = false
-layout_mode = 2
-theme_override_constants/separation = 20
-alignment = 1
-
-[node name="SkinsTitle" type="Label" parent="SelectLevelContainer/ContentMargin/SkinsView" unique_id=770000021]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.85, 0.25, 1)
-theme_override_font_sizes/font_size = 36
-text = "FLEET HANGAR - SHIP SKINS"
-horizontal_alignment = 1
-
-[node name="SkinsSubtitle" type="Label" parent="SelectLevelContainer/ContentMargin/SkinsView" unique_id=770000022]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.7, 0.8, 0.9, 1)
-theme_override_font_sizes/font_size = 20
-text = "Equip custom hulls and hull modulations for combat operations"
-horizontal_alignment = 1
-
-[node name="SkinsCenter" type="CenterContainer" parent="SelectLevelContainer/ContentMargin/SkinsView" unique_id=770000023]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="SkinsGrid" type="GridContainer" parent="SelectLevelContainer/ContentMargin/SkinsView/SkinsCenter" unique_id=770000024]
-layout_mode = 2
-theme_override_constants/h_separation = 24
-theme_override_constants/v_separation = 20
-columns = 2
-
-[node name="SkinDefaultButton" type="Button" parent="SelectLevelContainer/ContentMargin/SkinsView/SkinsCenter/SkinsGrid" unique_id=770000025]
-custom_minimum_size = Vector2(400, 72)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "🔹 Standard Interceptor [EQUIPPED]"
-
-[node name="SkinCrimsonButton" type="Button" parent="SelectLevelContainer/ContentMargin/SkinsView/SkinsCenter/SkinsGrid" unique_id=770000026]
-custom_minimum_size = Vector2(400, 72)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "🔥 Crimson Raptor [EQUIP]"
-
-[node name="SkinVoidButton" type="Button" parent="SelectLevelContainer/ContentMargin/SkinsView/SkinsCenter/SkinsGrid" unique_id=770000027]
-custom_minimum_size = Vector2(400, 72)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "🔮 Void Phantom [EQUIP]"
-
-[node name="SkinGoldButton" type="Button" parent="SelectLevelContainer/ContentMargin/SkinsView/SkinsCenter/SkinsGrid" unique_id=770000028]
-custom_minimum_size = Vector2(400, 72)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "👑 Golden Aegis [EQUIP]"
 
 [node name="LevelCompletedContainer" type="PanelContainer" parent="." unique_id=770000030]
 visible = false

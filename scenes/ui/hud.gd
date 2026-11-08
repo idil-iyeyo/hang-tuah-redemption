@@ -64,13 +64,19 @@ var base_track_x: float = 0.0
 @onready var banner_subtitle: Label = $BannerContainer/BannerSubtitle
 
 @onready var shop_container: PanelContainer = $ShopContainer
+@onready var shop_header: Label = get_node_or_null("ShopContainer/Margin/ShopVBox/ShopHeader")
 @onready var shop_points: Label = $ShopContainer/Margin/ShopVBox/ShopPoints
-@onready var shield_info: Label = $ShopContainer/Margin/ShopVBox/ItemsBox/ShieldRow/ShieldInfo
-@onready var shield_button: Button = $ShopContainer/Margin/ShopVBox/ItemsBox/ShieldRow/ShieldButton
-@onready var speed_info: Label = $ShopContainer/Margin/ShopVBox/ItemsBox/SpeedRow/SpeedInfo
-@onready var speed_button: Button = $ShopContainer/Margin/ShopVBox/ItemsBox/SpeedRow/SpeedButton
-@onready var gun_info: Label = $ShopContainer/Margin/ShopVBox/ItemsBox/GunRow/GunInfo
-@onready var gun_button: Button = $ShopContainer/Margin/ShopVBox/ItemsBox/GunRow/GunButton
+@onready var shop_tab_bar: HBoxContainer = get_node_or_null("ShopContainer/Margin/ShopVBox/ShopTabBar")
+@onready var shop_upgrades_tab_button: Button = get_node_or_null("ShopContainer/Margin/ShopVBox/ShopTabBar/ShopUpgradesTabButton")
+@onready var shop_skins_tab_button: Button = get_node_or_null("ShopContainer/Margin/ShopVBox/ShopTabBar/ShopSkinsTabButton")
+@onready var items_box: VBoxContainer = get_node_or_null("ShopContainer/Margin/ShopVBox/ItemsBox")
+@onready var shield_info: Label = get_node_or_null("ShopContainer/Margin/ShopVBox/ItemsBox/ShieldRow/ShieldInfo")
+@onready var shield_button: Button = get_node_or_null("ShopContainer/Margin/ShopVBox/ItemsBox/ShieldRow/ShieldButton")
+@onready var speed_info: Label = get_node_or_null("ShopContainer/Margin/ShopVBox/ItemsBox/SpeedRow/SpeedInfo")
+@onready var speed_button: Button = get_node_or_null("ShopContainer/Margin/ShopVBox/ItemsBox/SpeedRow/SpeedButton")
+@onready var gun_info: Label = get_node_or_null("ShopContainer/Margin/ShopVBox/ItemsBox/GunRow/GunInfo")
+@onready var gun_button: Button = get_node_or_null("ShopContainer/Margin/ShopVBox/ItemsBox/GunRow/GunButton")
+@onready var shop_separator2: HSeparator = get_node_or_null("ShopContainer/Margin/ShopVBox/HSeparator2")
 @onready var reset_upgrades_button: Button = get_node_or_null("ShopContainer/Margin/ShopVBox/ResetUpgradesButton")
 @onready var shop_status_label: Label = get_node_or_null("ShopContainer/Margin/ShopVBox/ShopStatusLabel")
 @onready var continue_button: Button = $ShopContainer/Margin/ShopVBox/ContinueButton
@@ -126,9 +132,10 @@ var base_track_x: float = 0.0
 @onready var exit_to_menu_button: Button = $SelectLevelContainer/TopBarMargin/TopBarHBox/ExitToMenuButton
 @onready var levels_tab_button: Button = $SelectLevelContainer/TopBarMargin/TopBarHBox/TabBarHBox/LevelsTabButton
 @onready var skins_tab_button: Button = $SelectLevelContainer/TopBarMargin/TopBarHBox/TabBarHBox/SkinsTabButton
-@onready var select_level_upgrade_button: Button = $SelectLevelContainer/TopBarMargin/TopBarHBox/SelectLevelUpgradeButton
+@onready var select_level_upgrade_button: Button = get_node_or_null("SelectLevelContainer/TopBarMargin/TopBarHBox/SelectLevelUpgradeButton")
 @onready var select_level_story_button: Button = get_node_or_null("SelectLevelContainer/TopBarMargin/TopBarHBox/SelectLevelStoryButton")
 @onready var spacer_left_balance: Control = get_node_or_null("SelectLevelContainer/TopBarMargin/TopBarHBox/SpacerLeftBalance")
+@onready var spacer_right_balance: Control = get_node_or_null("SelectLevelContainer/TopBarMargin/TopBarHBox/SpacerRightBalance")
 @onready var comic_slides: ComicSlides = get_node_or_null("ComicSlides")
 @onready var levels_view: VBoxContainer = $SelectLevelContainer/ContentMargin/LevelsView
 @onready var carousel_hbox: HBoxContainer = $SelectLevelContainer/ContentMargin/LevelsView/CarouselHBox
@@ -141,14 +148,18 @@ var base_track_x: float = 0.0
 @onready var prev_page_button: Button = left_arrow_button
 @onready var next_page_button: Button = right_arrow_button
 
-# Skins Screen Elements (Extensible Tab)
-@onready var skins_view: VBoxContainer = $SelectLevelContainer/ContentMargin/SkinsView
-@onready var skins_title: Label = get_node_or_null("SelectLevelContainer/ContentMargin/SkinsView/SkinsTitle")
-@onready var skins_subtitle: Label = get_node_or_null("SelectLevelContainer/ContentMargin/SkinsView/SkinsSubtitle")
-@onready var skin_default_button: Button = $SelectLevelContainer/ContentMargin/SkinsView/SkinsCenter/SkinsGrid/SkinDefaultButton
-@onready var skin_crimson_button: Button = $SelectLevelContainer/ContentMargin/SkinsView/SkinsCenter/SkinsGrid/SkinCrimsonButton
-@onready var skin_void_button: Button = $SelectLevelContainer/ContentMargin/SkinsView/SkinsCenter/SkinsGrid/SkinVoidButton
-@onready var skin_gold_button: Button = $SelectLevelContainer/ContentMargin/SkinsView/SkinsCenter/SkinsGrid/SkinGoldButton
+# Skins Screen Elements (Visual Hangar Cards inside ShopContainer)
+@onready var skins_view: VBoxContainer = get_node_or_null("ShopContainer/Margin/ShopVBox/SkinsView")
+@onready var skins_title: Label = get_node_or_null("ShopContainer/Margin/ShopVBox/ShopHeader")
+@onready var skins_subtitle: Label = get_node_or_null("ShopContainer/Margin/ShopVBox/SkinsView/SkinsSubtitle")
+@onready var skin_default_card: PanelContainer = get_node_or_null("ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinDefaultCard")
+@onready var skin_crimson_card: PanelContainer = get_node_or_null("ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinCrimsonCard")
+@onready var skin_void_card: PanelContainer = get_node_or_null("ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinVoidCard")
+@onready var skin_gold_card: PanelContainer = get_node_or_null("ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinGoldCard")
+@onready var skin_default_button: Button = get_node_or_null("ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinDefaultCard/Margin/HBox/VBox/SkinDefaultButton")
+@onready var skin_crimson_button: Button = get_node_or_null("ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinCrimsonCard/Margin/HBox/VBox/SkinCrimsonButton")
+@onready var skin_void_button: Button = get_node_or_null("ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinVoidCard/Margin/HBox/VBox/SkinVoidButton")
+@onready var skin_gold_button: Button = get_node_or_null("ShopContainer/Margin/ShopVBox/SkinsView/SkinsCenter/SkinsGrid/SkinGoldCard/Margin/HBox/VBox/SkinGoldButton")
 
 # Level Completed Screen Elements
 @onready var level_completed_container: PanelContainer = $LevelCompletedContainer
@@ -201,6 +212,15 @@ var cached_upgrade_points: int = 3
 var current_skin_id: String = "default"
 var shop_opened_from: String = "gameplay" # "gameplay", "select_level", "level_completed"
 var settings_opened_from: String = "welcome" # "welcome", "pause"
+var current_shop_tab: String = "upgrades" # "upgrades", "skins"
+var shop_default_tab: String = "upgrades"
+
+const SHIP_SKIN_TEXTURES: Dictionary = {
+	"default": preload("res://assets/textures/ships/HangTuahJet_1.png"),
+	"crimson": preload("res://assets/textures/ships/HangJebatJetNoExhaust.png"),
+	"void": preload("res://assets/textures/ships/Hang Lekir Jet - Player.png"),
+	"gold": preload("res://assets/textures/ships/Hang Kasturi Jet - Player Right.png"),
+}
 
 var ui_audio_player: AudioStreamPlayer = null
 var sfx_btn_click: AudioStream = null
@@ -238,6 +258,16 @@ func _ready() -> void:
 		reset_upgrades_button.pressed.connect(_on_reset_upgrades_pressed)
 	if continue_button:
 		continue_button.pressed.connect(_on_shop_continue_pressed)
+	if shop_upgrades_tab_button:
+		shop_upgrades_tab_button.pressed.connect(func():
+			_play_ui_sfx(sfx_btn_click)
+			_switch_shop_tab("upgrades")
+		)
+	if shop_skins_tab_button:
+		shop_skins_tab_button.pressed.connect(func():
+			_play_ui_sfx(sfx_btn_click)
+			_switch_shop_tab("skins")
+		)
 
 	# Welcome Screen Buttons
 	if play_button:
@@ -379,6 +409,20 @@ func _ready() -> void:
 		skin_void_button.pressed.connect(func(): _select_skin("void"))
 	if skin_gold_button:
 		skin_gold_button.pressed.connect(func(): _select_skin("gold"))
+
+	for card_data in [
+		[skin_default_card, "default"],
+		[skin_crimson_card, "crimson"],
+		[skin_void_card, "void"],
+		[skin_gold_card, "gold"]
+	]:
+		var scard: PanelContainer = card_data[0]
+		var skid: String = card_data[1]
+		if scard:
+			scard.gui_input.connect(func(ev: InputEvent):
+				if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
+					_select_skin(skid)
+			)
 
 	# Dialog Panels Styling (Solid backgrounds to prevent any transparency bleed-through)
 	if level_completed_container:
@@ -585,6 +629,7 @@ func _ready() -> void:
 		completed_upgrade_button.pressed.connect(func():
 			_play_ui_sfx(sfx_btn_click)
 			hide_level_completed()
+			shop_default_tab = "upgrades"
 			open_upgrade_bay_requested.emit("level_completed")
 		)
 	if completed_continue_button:
@@ -605,6 +650,7 @@ func _ready() -> void:
 		lost_upgrade_button.pressed.connect(func():
 			_play_ui_sfx(sfx_btn_click)
 			hide_level_lost()
+			shop_default_tab = "upgrades"
 			open_upgrade_bay_requested.emit("level_lost")
 		)
 	if lost_replay_button:
@@ -839,14 +885,35 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _handle_shop_input(event: InputEvent) -> void:
 	match event.physical_keycode:
-		KEY_1:
-			buy_upgrade_requested.emit("shield")
-		KEY_2:
-			buy_upgrade_requested.emit("speed")
-		KEY_3:
-			buy_upgrade_requested.emit("gun")
+		KEY_TAB:
+			_play_ui_sfx(sfx_btn_click)
+			if current_shop_tab == "upgrades":
+				_switch_shop_tab("skins")
+			else:
+				_switch_shop_tab("upgrades")
+			return
 		KEY_SPACE, KEY_ENTER, KEY_ESCAPE:
 			_on_shop_continue_pressed()
+			return
+
+	if current_shop_tab == "upgrades":
+		match event.physical_keycode:
+			KEY_1:
+				buy_upgrade_requested.emit("shield")
+			KEY_2:
+				buy_upgrade_requested.emit("speed")
+			KEY_3:
+				buy_upgrade_requested.emit("gun")
+	elif current_shop_tab == "skins":
+		match event.physical_keycode:
+			KEY_1:
+				_select_skin("default")
+			KEY_2:
+				_select_skin("crimson")
+			KEY_3:
+				_select_skin("void")
+			KEY_4:
+				_select_skin("gold")
 
 
 func _on_play_button_pressed() -> void:
@@ -1010,20 +1077,26 @@ func update_select_level_stats(unlocked_level: int, points: int) -> void:
 
 
 func _update_select_level_upgrade_button() -> void:
+	if skins_tab_button:
+		skins_tab_button.text = "🚀 HANGAR & UPGRADES (%d PTS)" % cached_upgrade_points
 	if select_level_upgrade_button:
 		select_level_upgrade_button.text = "💎 UPGRADE BAY (%d PTS)" % cached_upgrade_points
 	_update_top_bar_centering()
 
 
 func _update_top_bar_centering() -> void:
-	if not spacer_left_balance or not exit_to_menu_button or not select_level_upgrade_button:
+	if not exit_to_menu_button:
 		return
-	var right_w: float = select_level_upgrade_button.size.x
-	if select_level_story_button and select_level_story_button.visible:
-		right_w += select_level_story_button.size.x + 16.0
 	var left_w: float = exit_to_menu_button.size.x
-	var diff: float = right_w - left_w
-	spacer_left_balance.custom_minimum_size.x = maxf(0.0, diff)
+	var right_w: float = 0.0
+	if select_level_story_button and select_level_story_button.visible:
+		right_w += select_level_story_button.size.x
+	if select_level_upgrade_button and select_level_upgrade_button.visible:
+		right_w += select_level_upgrade_button.size.x + 12.0
+	if spacer_left_balance:
+		spacer_left_balance.custom_minimum_size.x = maxf(0.0, right_w - left_w)
+	if spacer_right_balance:
+		spacer_right_balance.custom_minimum_size.x = maxf(0.0, left_w - right_w)
 
 
 func _get_total_pages() -> int:
@@ -1326,22 +1399,118 @@ func _switch_tab(tab_name: String) -> void:
 	if tab_name == "levels":
 		if levels_view:
 			levels_view.visible = true
-		if skins_view:
-			skins_view.visible = false
 		if levels_tab_button:
 			levels_tab_button.set("theme_override_colors/font_color", Color(0.3, 0.95, 1.0))
 		if skins_tab_button:
 			skins_tab_button.set("theme_override_colors/font_color", Color(0.7, 0.7, 0.7))
-	elif tab_name == "skins":
-		if levels_view:
-			levels_view.visible = false
-		if skins_view:
-			skins_view.visible = true
+	elif tab_name in ["skins", "hangar", "upgrades"]:
 		if levels_tab_button:
 			levels_tab_button.set("theme_override_colors/font_color", Color(0.7, 0.7, 0.7))
 		if skins_tab_button:
 			skins_tab_button.set("theme_override_colors/font_color", Color(1.0, 0.85, 0.25))
+		if tab_name == "skins":
+			shop_default_tab = "skins"
+		elif tab_name == "upgrades":
+			shop_default_tab = "upgrades"
+		else:
+			shop_default_tab = current_shop_tab
+		open_upgrade_bay_requested.emit("select_level")
+
+
+func _switch_shop_tab(tab_name: String) -> void:
+	current_shop_tab = tab_name
+	var is_upg: bool = (tab_name == "upgrades")
+	if items_box:
+		items_box.visible = is_upg
+	if reset_upgrades_button:
+		reset_upgrades_button.visible = is_upg
+	if shop_separator2:
+		shop_separator2.visible = is_upg
+	if shop_status_label and not is_upg:
+		shop_status_label.visible = false
+	if skins_view:
+		skins_view.visible = not is_upg
+
+	if shop_upgrades_tab_button:
+		_style_shop_tab_button(shop_upgrades_tab_button, is_upg)
+	if shop_skins_tab_button:
+		_style_shop_tab_button(shop_skins_tab_button, not is_upg)
+
+	if not is_upg:
 		_refresh_skins_view()
+
+
+func _style_shop_tab_button(btn: Button, is_active: bool) -> void:
+	if not btn:
+		return
+	var style: StyleBoxFlat = StyleBoxFlat.new()
+	style.set_corner_radius_all(8)
+	if is_active:
+		style.bg_color = Color(0.08, 0.22, 0.35, 0.95)
+		style.set_border_width_all(2)
+		style.border_color = Color(0.3, 0.95, 1.0, 1.0)
+		btn.set("theme_override_colors/font_color", Color(0.3, 0.95, 1.0))
+		btn.set("theme_override_colors/font_hover_color", Color(0.6, 1.0, 1.0))
+	else:
+		style.bg_color = Color(0.05, 0.08, 0.14, 0.8)
+		style.set_border_width_all(1)
+		style.border_color = Color(0.3, 0.35, 0.45, 0.6)
+		btn.set("theme_override_colors/font_color", Color(0.65, 0.7, 0.78))
+		btn.set("theme_override_colors/font_hover_color", Color(0.9, 0.95, 1.0))
+	btn.add_theme_stylebox_override("normal", style)
+	var hov: StyleBoxFlat = style.duplicate()
+	hov.bg_color = Color(0.12, 0.28, 0.42, 1.0)
+	hov.border_color = Color(0.5, 1.0, 1.0, 1.0)
+	btn.add_theme_stylebox_override("hover", hov)
+	btn.add_theme_stylebox_override("pressed", hov)
+
+
+func _style_skin_card(card: PanelContainer, is_equipped: bool, accent_color: Color) -> void:
+	if not card:
+		return
+	var style: StyleBoxFlat = StyleBoxFlat.new()
+	style.set_corner_radius_all(10)
+	if is_equipped:
+		style.bg_color = Color(accent_color.r * 0.14, accent_color.g * 0.14, accent_color.b * 0.14, 0.95)
+		style.set_border_width_all(2)
+		style.border_color = accent_color
+		style.shadow_color = Color(accent_color.r, accent_color.g, accent_color.b, 0.4)
+		style.shadow_size = 10
+	else:
+		style.bg_color = Color(0.04, 0.06, 0.10, 0.90)
+		style.set_border_width_all(1)
+		style.border_color = Color(0.25, 0.3, 0.4, 0.5)
+		style.shadow_color = Color(0, 0, 0, 0.3)
+		style.shadow_size = 4
+	card.add_theme_stylebox_override("panel", style)
+
+
+func _style_skin_button(btn: Button, is_equipped: bool, accent_color: Color) -> void:
+	if not btn:
+		return
+	var norm: StyleBoxFlat = StyleBoxFlat.new()
+	norm.set_corner_radius_all(6)
+	if is_equipped:
+		btn.text = "✓ EQUIPPED"
+		norm.bg_color = Color(accent_color.r * 0.25, accent_color.g * 0.25, accent_color.b * 0.25, 0.95)
+		norm.set_border_width_all(2)
+		norm.border_color = accent_color
+		btn.set("theme_override_colors/font_color", accent_color)
+		btn.set("theme_override_colors/font_hover_color", Color(1, 1, 1))
+	else:
+		btn.text = "EQUIP SHIP"
+		norm.bg_color = Color(0.1, 0.14, 0.22, 0.9)
+		norm.set_border_width_all(1)
+		norm.border_color = Color(0.4, 0.5, 0.65, 0.8)
+		btn.set("theme_override_colors/font_color", Color(0.85, 0.9, 0.95))
+		btn.set("theme_override_colors/font_hover_color", Color(1, 1, 1))
+	btn.add_theme_stylebox_override("normal", norm)
+
+	var hov: StyleBoxFlat = norm.duplicate()
+	hov.bg_color = Color(accent_color.r * 0.35 + 0.1, accent_color.g * 0.35 + 0.1, accent_color.b * 0.35 + 0.1, 1.0)
+	hov.border_color = Color(1, 1, 1, 0.9)
+	btn.add_theme_stylebox_override("hover", hov)
+	btn.add_theme_stylebox_override("pressed", hov)
 
 
 func _select_skin(skin_id: String) -> void:
@@ -1356,7 +1525,7 @@ func _select_skin(skin_id: String) -> void:
 
 func _refresh_skins_view() -> void:
 	if skins_title:
-		skins_title.text = "FLEET HANGAR - EMPAT PENDEKAR"
+		skins_title.text = "FLEET HANGAR & UPGRADE BAY"
 	if skins_subtitle:
 		match current_skin_id:
 			"crimson":
@@ -1368,22 +1537,20 @@ func _refresh_skins_view() -> void:
 			_:
 				skins_subtitle.text = "🌙 Hang Tuah Jet: Sang Laksamana — 'Tak Melayu Hilang di Angkasa'"
 
-	if skin_default_button:
-		var eq_def: bool = (current_skin_id == "default")
-		skin_default_button.text = "🌙 Hang Tuah Jet " + ("[EQUIPPED]" if eq_def else "[EQUIP]")
-		skin_default_button.set("theme_override_colors/font_color", Color(0.3, 0.95, 1.0) if eq_def else Color(0.9, 0.9, 0.9))
-	if skin_crimson_button:
-		var eq_crim: bool = (current_skin_id == "crimson")
-		skin_crimson_button.text = "🗡️ Hang Jebat Jet " + ("[EQUIPPED]" if eq_crim else "[EQUIP]")
-		skin_crimson_button.set("theme_override_colors/font_color", Color(1.0, 0.4, 0.4) if eq_crim else Color(0.9, 0.9, 0.9))
-	if skin_void_button:
-		var eq_void: bool = (current_skin_id == "void")
-		skin_void_button.text = "🥷 Hang Lekir Jet " + ("[EQUIPPED]" if eq_void else "[EQUIP]")
-		skin_void_button.set("theme_override_colors/font_color", Color(1.0, 0.85, 0.25) if eq_void else Color(0.9, 0.9, 0.9))
-	if skin_gold_button:
-		var eq_gold: bool = (current_skin_id == "gold")
-		skin_gold_button.text = "👑 Hang Kasturi Jet " + ("[EQUIPPED]" if eq_gold else "[EQUIP]")
-		skin_gold_button.set("theme_override_colors/font_color", Color(0.75, 0.45, 1.0) if eq_gold else Color(0.9, 0.9, 0.9))
+	var is_def: bool = (current_skin_id == "default")
+	var is_crim: bool = (current_skin_id == "crimson")
+	var is_void: bool = (current_skin_id == "void")
+	var is_gold: bool = (current_skin_id == "gold")
+
+	_style_skin_card(skin_default_card, is_def, Color(0.3, 0.95, 1.0))
+	_style_skin_card(skin_crimson_card, is_crim, Color(1.0, 0.4, 0.4))
+	_style_skin_card(skin_void_card, is_void, Color(1.0, 0.85, 0.25))
+	_style_skin_card(skin_gold_card, is_gold, Color(0.75, 0.45, 1.0))
+
+	_style_skin_button(skin_default_button, is_def, Color(0.3, 0.95, 1.0))
+	_style_skin_button(skin_crimson_button, is_crim, Color(1.0, 0.4, 0.4))
+	_style_skin_button(skin_void_button, is_void, Color(1.0, 0.85, 0.25))
+	_style_skin_button(skin_gold_button, is_gold, Color(0.75, 0.45, 1.0))
 
 
 # -----------------------------------------------------------------------------
@@ -1636,6 +1803,9 @@ func _on_shop_continue_pressed() -> void:
 			if select_level_container:
 				select_level_container.visible = true
 				_update_select_level_upgrade_button()
+				if levels_view:
+					levels_view.visible = true
+				_switch_tab("levels")
 		"level_completed":
 			close_shop()
 			if level_completed_container:
@@ -1863,6 +2033,7 @@ func execute_reset_all_progress() -> void:
 	current_skin_id = "default"
 	current_page = 1
 	update_upgrade_points(cached_upgrade_points)
+	_refresh_skins_view()
 
 	if reset_status_label:
 		reset_status_label.visible = true
@@ -2156,6 +2327,11 @@ func open_shop(
 
 	if shop_status_label:
 		shop_status_label.visible = false
+
+	# Refresh skins view and activate target tab
+	var target_tab: String = shop_default_tab if not shop_default_tab.is_empty() else "upgrades"
+	shop_default_tab = "upgrades" # reset for next time
+	_switch_shop_tab(target_tab)
 
 	if shop_container:
 		shop_container.visible = true
